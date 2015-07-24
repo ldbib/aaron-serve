@@ -1,0 +1,31 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    title Aaron
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', type='text/css', href='./style.css')
+  body
+    include includes/topBar.jade
+    div.container.small-margin-top
+      div#start.pages
+        include includes/start.jade
+      div#myAccount.pages
+        include includes/myAccount.jade
+      div#administration.pages
+        ul.no-list-formatting(data-tab)
+          li: a.button.expand(href='#users') Anv&auml;ndare
+          li: a.button.expand(href='#applications') Applikationer
+          li: a.button.expand(href='#groups') Grupper
+          li: a.button.expand(href='#permissions') Beh&ouml;righeter
+      div#users.pages
+        include includes/users.jade
+      div#applications.pages
+        include includes/applications.jade
+      div#groups.pages
+        include includes/groups.jade
+      div#permissions.pages
+        include includes/permissions.jade
+    include includes/modals/login.jade
+    script(type='text/javascript', src='./script.js')
+    // script(type='text/javascript', src='//aaron.ldbib.se:9091')

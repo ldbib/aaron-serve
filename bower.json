@@ -1,0 +1,33 @@
+{
+  "name": "aaron-serve",
+  "version": "0.0.1",
+  "authors": [
+    "Emil Hemdal <emil.hemdal.em@gmail.com>"
+  ],
+  "description": "Aaron serve",
+  "keywords": [
+    "aaron"
+  ],
+  "license": "AGPL-3.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "foundation": "~5.5.2",
+    "jquery": "~1.11.3",
+    "lodash": "~3.9.3",
+    "backbone": "~1.2.1",
+    "respond": "~1.4.2",
+    "jquery-placeholder": "~2.1.2",
+    "fastclick": "~1.0.6",
+    "modernizr": "~2.8.3"
+  },
+  "resolutions": {
+    "jquery-placeholder": "~2.1.2",
+    "jquery": "~1.11.3"
+  }
+}

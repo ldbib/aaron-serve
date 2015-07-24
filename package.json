@@ -1,0 +1,74 @@
+{
+  "name": "aaron-serve",
+  "version": "0.0.1",
+  "description": "Aaron serve",
+  "main": "gulp.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "browserify": "latest",
+    "browserify-shim": "^3.8.10",
+    "exorcist": "latest",
+    "jade": "latest",
+    "live-reload": "^1.1.0",
+    "minimist": "^1.1.2",
+    "parallelshell": "latest",
+    "stylus": "latest",
+    "watch": "latest",
+    "watchify": "^3.3.0"
+  },
+  "scripts": {
+    "test": "echo \"Achtung!\"",
+    "prebuild": "npm run clean -s",
+    "clean": "rm -r dist/*",
+    "build": "npm run build:js && npm run build:css && npm run build:html && npm run build:fonts && npm run build:images",
+    "build:js": "node build-js.js",
+    "build:css": "node build-css.js",
+    "build:html": "jade --pretty --path source/jade/main.jade < source/jade/main.jade > dist/index.html",
+    "build:fonts": "rm -r -f dist/fonts/ && mkdir -p dist/fonts/ && cp -r source/fonts/* dist/fonts/",
+    "build:images": "rm -r -f dist/img/ && mkdir -p dist/img/ && cp -r source/img/* dist/img/",
+    "build:watch": "parallelshell 'npm run watch:js' 'npm run watch:css' 'npm run watch:html' 'npm run watch:fonts' 'npm run watch:images' 'npm run livereload'",
+    "watch:js": "npm run build:js -- -w",
+    "watch:css": "watch 'npm run build:css' source/stylus/",
+    "watch:html": "watch 'npm run build:html' source/jade/",
+    "watch:fonts": "watch 'npm run build:fonts' source/fonts/",
+    "watch:images": "watch 'npm run build:images' source/img/",
+    "livereload": "live-reload --port 9091 dist/",
+    "reload": "reload --dir dist/ --port 7356"
+  },
+  "keywords": [
+    "aaron",
+    "application",
+    "group"
+  ],
+  "author": "Emil Hemdal",
+  "license": "AGPL-3.0",
+  "private": true,
+  "browser": {
+    "jquery":             "./bower_components/jquery/dist/jquery.js",
+    "jqueryPlaceholder":  "./bower_components/jquery-placeholder/jquery.placeholder.js",
+    "backbone":           "./bower_components/backbone/backbone.js",
+    "fastclick":          "./bower_components/fastclick/lib/fastclick.js",
+    "lodash":             "./bower_components/lodash/lodash.js",
+    "foundation":         "./bower_components/foundation/js/foundation/foundation.js",
+    "foundationTopbar":   "./bower_components/foundation/js/foundation/foundation.reveal.js",
+    "foundationReveal":   "./bower_components/foundation/js/foundation/foundation.topbar.js",
+    "modernizr":          "./bower_components/modernizr/modernizr.js"
+  },
+  "browserify-shim": {
+    "jquery": { "exports": "$"},
+    "backbone": { "exports": "Backbone", "depends": ["jquery", "lodash"] },
+    "lodash": { "exports": "_" },
+    "foundation": { "depends": ["jquery", "jqueryPlaceholder", "fastclick"] },
+    "foundationReveal": { "depends": ["jquery", "foundation"] },
+    "foundationTopbar": { "depends": ["jquery", "foundation"] },
+    "modernizr": { "exports": "Modernizr" }
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  }
+}

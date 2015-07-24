@@ -1,0 +1,76 @@
+#loginForm.reveal-modal(data-reveal='', aria-labelledby='loginFormTitle', aria-hidden='true', role='dialog')
+  h3#loginFormTitle Aaron inloggning
+  p
+    | Inloggning till system som Proxive, ScourDox och Artikelskördaren
+  p
+    | Inloggningsuppgifterna här är separata ifrån din organisations-/landstingsinloggning.
+  form
+    .row.medium-uncollapse.small-collapse.signup.login
+      .large-3.medium-5.columns.show-for-medium-up
+        label.right.inline(for='login-organization') Organisation
+      .large-9.medium-7.small-12.columns
+        label.hide-for-medium-up(for='login-organization') Organisation
+        select#login-organization
+    .row.medium-uncollapse.small-collapse.signup
+      .large-3.medium-5.columns.show-for-medium-up
+        label.right.inline(for='login-firstname') Förnamn
+      .large-9.medium-7.small-12.columns
+        label.hide-for-medium-up(for='login-firstname') Förnamn
+        input#login-firstname(type='text', placeholder='Förnamn')
+    .row.medium-uncollapse.small-collapse.signup
+      .large-3.medium-5.columns.show-for-medium-up
+        label.right.inline(for='login-lastname') Efternamn
+      .large-9.medium-7.small-12.columns
+        label.hide-for-medium-up(for='login-lastname') Efternamn
+        input#login-lastname(type='text', placeholder='Efternamn')
+    .row.medium-uncollapse.small-collapse.signup
+      .large-3.medium-5.columns.show-for-medium-up
+        label.right.inline(for='login-workplace') Arbetsplats
+      .large-9.medium-7.small-12.columns
+        label.hide-for-medium-up(for='login-workplace') Arbetsplats
+        input#login-workplace(type='text', placeholder='Arbetsplats')
+    .row.medium-uncollapse.small-collapse.signup
+      .large-3.medium-5.columns.show-for-medium-up
+        label.right.inline(for='login-email') Din jobbmail
+      .large-9.medium-7.small-12.columns
+        label.hide-for-medium-up(for='login-email') Din jobbmail
+        input#login-email(type='text', placeholder='Din jobbmail')
+    .row.medium-uncollapse.small-collapse.forgot
+      .large-3.medium-5.columns.show-for-medium-up
+        label.right.inline(for='restore-email') E-postadress kopplad till ditt konto
+      .large-9.medium-7.small-12.columns
+        label.hide-for-medium-up(for='restore-email') E-postadress kopplad till ditt konto
+        input#restore-email(type='text', placeholder='E-postadress kopplad till ditt konto')
+    .row.medium-uncollapse.small-collapse.signup
+      .large-3.medium-5.columns.show-for-medium-up
+        label.right.inline(for='login-private-email') Privat e-postadress
+      .large-9.medium-7.small-12.columns
+        label.hide-for-medium-up(for='login-private-email') Privat e-postadress
+        input#login-private-email(type='text', placeholder='Privat e-postadress')
+    .row.medium-uncollapse.small-collapse.signup.login
+      .large-3.medium-5.columns.show-for-medium-up
+        label.right.inline(for='login-username') Användarnamn
+      .large-9.medium-7.small-12.columns
+        label.hide-for-medium-up(for='login-username') Användarnamn
+        input#login-username(type='text', placeholder='Användarnamn')
+    .row.medium-uncollapse.small-collapse.signup.login
+      .large-3.medium-5.columns.show-for-medium-up
+        label.right.inline(for='login-password') Lösenord
+      .large-9.medium-7.small-12.columns
+        label.hide-for-medium-up(for='login-password') Lösenord
+        input#login-password(type='password', placeholder='Lösenord')
+    .row.medium-uncollapse.small-collapse.signup
+      .large-3.medium-5.columns.show-for-medium-up
+        label.right.inline(for='login-validate-password') Verifiera lösenord
+      .large-9.medium-7.small-12.columns
+        label.hide-for-medium-up(for='login-validate-password') Verifiera lösenord
+        input#login-validate-password(type='password', placeholder='Verifiera lösenord')
+    .row.medium-uncollapse.small-collapse
+      .small-12.columns.text-right
+        button#login-button.button.success.login(type='button') Logga in
+        button#login-new-create.button.success.signup(type='button') Skicka ansökan
+        button#login-new-abort.button.alert.signup(type='button') Avbryt ansökan
+        button#login-new.button.info.login(type='button') Ansök om konto
+        button#login-forgot.button.secondary.login(type='button') Glömt lösenordet?
+        button#login-forgot-send.button.success.forgot(type='button') Skicka återställningsmail
+        button#login-forgot-abort.button.alert.forgot(type='button') Avbryt återställning

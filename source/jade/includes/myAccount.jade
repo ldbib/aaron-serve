@@ -1,0 +1,70 @@
+.row
+  .large-2.medium-4.columns.show-for-medium-up
+    label.right.inline(for='myAccount-username') Användarnamn
+  .large-10.medium-8.small-12.columns
+    label.hide-for-medium-up(for='myAccount-username') Användarnamn
+    input#myAccount-username(readonly type='text', placeholder='Användarnamn')
+.row
+  .large-2.medium-4.columns.show-for-medium-up
+    label.right.inline(for='myAccount-organization') Organisation
+  .large-10.medium-8.small-12.columns
+    label.hide-for-medium-up(for='myAccount-organization') Organisation
+    select(disabled)#myAccount-organization
+.row
+  .large-2.medium-4.columns.show-for-medium-up
+    label.right.inline(for='myAccount-workplace') Arbetsplats
+  .large-10.medium-8.small-12.columns
+    label.hide-for-medium-up(for='myAccount-workplace') Arbetsplats
+    input#myAccount-workplace(type='text', placeholder='Arbetsplats')
+.row
+  .large-2.medium-4.columns.show-for-medium-up
+    label.right.inline(for='myAccount-firstname') Förnamn
+  .large-10.medium-8.small-12.columns
+    label.hide-for-medium-up(for='myAccount-firstname') Förnamn
+    input#myAccount-firstname(type='text', placeholder='Förnamn')
+.row
+  .large-2.medium-4.columns.show-for-medium-up
+    label.right.inline(for='myAccount-lastname') Efternamn
+  .large-10.medium-8.small-12.columns
+    label.hide-for-medium-up(for='myAccount-lastname') Efternamn
+    input#myAccount-lastname(type='text', placeholder='Efternamn')
+.row
+  .small-12.columns.text-center
+      hr
+      p För att byta ditt lösenord och/eller e-postadress(er) så behöver du ange ditt nuvarande lösenord.
+      hr
+.row
+  .large-2.medium-4.columns.show-for-medium-up
+    label.right.inline(for='myAccount-old-password') Nuvarande lösenord
+  .large-10.medium-8.small-12.columns
+    label.hide-for-medium-up(for='myAccount-old-password') Nuvarande lösenord
+    input#myAccount-old-password(type='password', placeholder='Nuvarande lösenord')
+.row
+  .large-2.medium-4.columns.show-for-medium-up
+    label.right.inline(for='myAccount-email') Din jobbmail
+  .large-10.medium-8.small-12.columns
+    label.hide-for-medium-up(for='myAccount-email') Din jobbmail
+    input#myAccount-email(type='text', placeholder='Din jobbmail')
+.row
+  .large-2.medium-4.columns.show-for-medium-up
+    label.right.inline(for='myAccount-private-email') Privat e-postadress
+  .large-10.medium-8.small-12.columns
+    label.hide-for-medium-up(for='myAccount-private-email') Privat e-postadress
+    input#myAccount-private-email(type='text', placeholder='Privat e-postadress')
+.row
+  .large-2.medium-4.columns.show-for-medium-up
+    label.right.inline(for='myAccount-password') Nytt lösenord (valfritt)
+  .large-10.medium-8.small-12.columns
+    label.hide-for-medium-up(for='myAccount-password') Nytt lösenord (valfritt)
+    input#myAccount-password(type='password', placeholder='Nytt lösenord (valfritt)')
+.row
+  .large-2.medium-4.columns.show-for-medium-up
+    label.right.inline(for='myAccount-validate-password') Verifiera nytt lösenord
+  .large-10.medium-8.small-12.columns
+    label.hide-for-medium-up(for='myAccount-validate-password') Verifiera nytt lösenord
+    input#myAccount-validate-password(type='password', placeholder='Verifiera nytt lösenord')
+.row
+  .small-12.columns.text-right
+    button#myAccount-save.button.success(type='button') Spara ändringar
+    button#myAccount-abort.button.alert(type='button') Avbryt ändringar
+    button#myAccount-delete.button.warning(type='button') Ta bort konto

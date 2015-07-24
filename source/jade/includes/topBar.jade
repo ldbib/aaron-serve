@@ -1,0 +1,21 @@
+nav#top-bar.top-bar(data-topbar='', role='navigation')
+  ul.title-area
+    li.name
+      h1: a(href='#') Aaron
+    // Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone
+    li.toggle-topbar.menu-icon
+      a(href='#')
+        span Menu
+  section.top-bar-section
+    // Right Nav Section
+    ul.right#navigation
+      li: a(href='#start') Startsida
+      li: a(href='#myAccount') Mitt konto
+      li.has-dropdown
+        a(href='#null') Administration
+        ul.dropdown
+          li: a(href='#users') Anv&auml;ndare
+          li: a(href='#applications') Applikationer
+          li: a(href='#groups') Grupper
+          li: a(href='#permissions') Beh&ouml;righeter
+      li: a(href='#') Logga ut

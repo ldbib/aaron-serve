@@ -1,0 +1,22 @@
+
+.container {
+  max-width: 60em;
+  margin: 0 auto;
+}
+
+.no-list-formatting {
+  list-style: none;
+  margin-left: 0;
+}
+
+#administration button {
+  margin-top: 0.1em;
+}
+
+option {
+  width: 100%;
+}
+
+.small-margin-top {
+  margin-top: 10px;
+}
