@@ -30,8 +30,7 @@ console.log($)
 console.log(jQuery)
 console.log(Modernizr)
 
-var $loginForm,
-  hash,
+var hash,
   visiblePage
 
 $(document).foundation({
@@ -44,9 +43,11 @@ $(document).foundation({
   }
 })
 
-$loginForm = $('#loginForm')
-
-showLoginForm()
+login.isLoggedIn(function(status) {
+  if(!status) {
+    login.displayModal()
+  }
+})
 
 $('.pages').hide()
 hash = window.location.hash.replace('#', '')
@@ -74,36 +75,6 @@ $('#navigation').add('#administration').find('li a[href^="#"]').click(function(e
     window.location.hash = $this.attr('href')
     page.attr('id', pageId)
   }
-})
-
-if(!loggedIn) {
-  $loginForm.foundation('reveal', 'open')
-}
-
-$('#login-button').click(function() {
-  loggedIn = true
-  $loginForm.foundation('reveal', 'close')
-})
-
-$('#login-new').click(function() {
-  hideLoginForms()
-  $loginForm.find('.signup').show()
-})
-$('#login-new-abort').click(function() {
-  showLoginForm()
-})
-
-$('#login-forgot').click(function() {
-  hideLoginForms()
-  $loginForm.find('.forgot').show()
-})
-
-$('#login-forgot-send').click(function() {
-
-})
-
-$('#login-forgot-abort').click(function() {
-  showLoginForm()
 })
 
 var organizations = [

@@ -18,3 +18,6 @@ option
 
 .small-margin-top
   margin-top: 10px
+
+#alertModal .close
+  margin: 1.25rem 0 0

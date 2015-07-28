@@ -1,4 +1,4 @@
-#loginForm.reveal-modal(data-reveal='', aria-labelledby='loginFormTitle', aria-hidden='true', role='dialog')
+#loginModal.reveal-modal(data-reveal='', aria-labelledby='loginFormTitle', aria-hidden='true', role='dialog')
   h3#loginFormTitle Aaron inloggning
   p
     | Inloggning till system som Proxive, ScourDox och Artikelskördaren
@@ -36,10 +36,10 @@
         label.hide-for-medium-up(for='login-email') Din jobbmail
         input#login-email(type='text', placeholder='Din jobbmail')
     .row.medium-uncollapse.small-collapse.forgot
-      .large-3.medium-5.columns.show-for-medium-up
+      .large-4.medium-12.columns.show-for-large-up
         label.right.inline(for='restore-email') E-postadress kopplad till ditt konto
-      .large-9.medium-7.small-12.columns
-        label.hide-for-medium-up(for='restore-email') E-postadress kopplad till ditt konto
+      .large-8.medium-12.small-12.columns
+        label.hide-for-large-up(for='restore-email') E-postadress kopplad till ditt konto
         input#restore-email(type='text', placeholder='E-postadress kopplad till ditt konto')
     .row.medium-uncollapse.small-collapse.signup
       .large-3.medium-5.columns.show-for-medium-up

@@ -14,34 +14,64 @@ require('lodash')
 
 var Backbone = require('backbone')
 
-var $loginForm = $('#loginForm')
+var alertModal = require('./alert.js')
+
+var loadingModal = require('./loading.js')
+
+var $loginModal = $('#loginModal')
 
 var loggedIn = false
 
 function hideLoginForms() {
-  $loginForm.find('.signup').hide()
-  $loginForm.find('.login').hide()
-  $loginForm.find('.forgot').hide()
+  $loginModal.find('.signup').hide()
+  $loginModal.find('.login').hide()
+  $loginModal.find('.forgot').hide()
 }
 
-function displayLoginForm() {
+function displayLoginModal() {
   hideLoginForms()
-  $loginForm.find('.login').show()
+  $loginModal.find('.login').show()
+  $loginModal.foundation('reveal', 'open')
 }
 
-function checkLoggedInStatus() {
-  if(loggedIn) {
-    // yay!
-  } else {
-    displayLoginForm()
-  }
+function isLoggedIn(callback) {
+  setTimeout(function() {
+    callback(loggedIn)
+  }, 10)
 }
 
-checkLoggedInStatus()
+$('#login-button').click(function() {
+  loggedIn = true
+  $loginModal.foundation('reveal', 'close')
+})
+
+$('#login-new').click(function() {
+  hideLoginForms()
+  $loginModal.find('.signup').show()
+})
+$('#login-new-abort').click(function() {
+  displayLoginModal()
+})
+
+$('#login-forgot').click(function() {
+  hideLoginForms()
+  $loginModal.find('.forgot').show()
+})
+
+$('#login-forgot-send').click(function() {
+  loadingModal.display()
+  setTimeout(function() {
+    alertModal.display('Återställningsmeddelande skickat!', 'Ett lösenordsåterställningsmeddelande har skickats till den specifierade e-postadressen!')
+  }, 1000)
+})
+
+$('#login-forgot-abort').click(function() {
+  displayLoginModal()
+})
 
 module.exports = {
-  loggedIn: loggedIn,
-  loginForm: $loginForm,
+  loginModal: $loginModal,
   hideLoginForms: hideLoginForms,
-  displayForm: displayLoginForm
+  displayModal: displayLoginModal,
+  isLoggedIn: isLoggedIn
 }
