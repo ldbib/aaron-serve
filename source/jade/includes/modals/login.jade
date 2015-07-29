@@ -1,9 +1,10 @@
 #loginModal.reveal-modal(data-reveal='', aria-labelledby='loginFormTitle', aria-hidden='true', role='dialog')
-  h3#loginFormTitle Aaron inloggning
-  p
-    | Inloggning till system som Proxive, ScourDox och Artikelskördaren
-  p
-    | Inloggningsuppgifterna här är separata ifrån din organisations-/landstingsinloggning.
+  div#loginInformation
+    h3#loginFormTitle Aaron inloggning
+    p
+      | Inloggning till system som Proxive, ScourDox och Artikelskördaren
+    p
+      | Inloggningsuppgifterna här är separata ifrån din organisations-/landstingsinloggning.
   form
     .row.medium-uncollapse.small-collapse.signup.login
       .large-3.medium-5.columns.show-for-medium-up
@@ -41,6 +42,13 @@
       .large-8.medium-12.small-12.columns
         label.hide-for-large-up(for='restore-email') E-postadress kopplad till ditt konto
         input#restore-email(type='text', placeholder='E-postadress kopplad till ditt konto')
+    .row.medium-uncollapse.small-collapse.loading
+      h4 Laddar...
+    .row.medium-uncollapse.small-collapse.recovery-sent
+      h4 Återställningsmeddelande skickat!
+      div Ett lösenordsåterställningsmeddelande har skickats till den specifierade e-postadressen!
+      div
+        button#login-back-recovery.button.success.close(type='button') Tillbaka
     .row.medium-uncollapse.small-collapse.signup
       .large-3.medium-5.columns.show-for-medium-up
         label.right.inline(for='login-private-email') Privat e-postadress

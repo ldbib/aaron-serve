@@ -26,6 +26,8 @@ function hideLoginForms() {
   $loginModal.find('.signup').hide()
   $loginModal.find('.login').hide()
   $loginModal.find('.forgot').hide()
+  $loginModal.find('.loading').hide()
+  $loginModal.find('.recovery-sent').hide()
 }
 
 function displayLoginModal() {
@@ -59,10 +61,18 @@ $('#login-forgot').click(function() {
 })
 
 $('#login-forgot-send').click(function() {
-  loadingModal.display()
+  $('#loginInformation').hide()
+  hideLoginForms()
+  $loginModal.find('.loading').show()
   setTimeout(function() {
-    alertModal.display('Återställningsmeddelande skickat!', 'Ett lösenordsåterställningsmeddelande har skickats till den specifierade e-postadressen!')
+    hideLoginForms()
+    $loginModal.find('.recovery-sent').show()
   }, 1000)
+})
+
+$('#login-back-recovery').click(function() {
+  $('#loginInformation').show()
+  displayLoginModal()
 })
 
 $('#login-forgot-abort').click(function() {
