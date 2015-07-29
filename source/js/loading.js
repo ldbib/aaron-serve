@@ -2,17 +2,10 @@
 
 'use strict'
 
-require('modernizr')
-
 require('jquery')
 
 require('foundation')
 require('foundationReveal')
-require('foundationTopbar')
-
-require('lodash')
-
-var Backbone = require('backbone')
 
 var $loadingModal = $('#loadingModal')
 

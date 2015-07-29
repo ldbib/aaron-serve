@@ -2,25 +2,17 @@
 
 'use strict'
 
-require('modernizr')
-
 require('jquery')
 
 require('foundation')
 require('foundationReveal')
-require('foundationTopbar')
-
-require('lodash')
-
-var Backbone = require('backbone')
-
-var alertModal = require('./alert.js')
-
-var loadingModal = require('./loading.js')
 
 var $loginModal = $('#loginModal')
 
 var loggedIn = false
+
+// StackOverflow RegEx Email validation: http://stackoverflow.com/a/46181/1294363
+var reEmailValidation = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
 
 function hideLoginForms() {
   $loginModal.find('.signup').hide()
@@ -61,6 +53,11 @@ $('#login-forgot').click(function() {
 })
 
 $('#login-forgot-send').click(function() {
+  var $email = $('#restore-email')
+  if(!reEmailValidation.test($email.val())) {
+    alert('Ogiltig e-postadress!') // Placeholder
+    return
+  }
   $('#loginInformation').hide()
   hideLoginForms()
   $loginModal.find('.loading').show()

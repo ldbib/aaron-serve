@@ -17,18 +17,7 @@ require('foundationTopbar')
 
 require('lodash')
 
-var Backbone = require('backbone')
-
 var login = require('./login.js')
-
-console.log(login)
-
-console.log(Backbone)
-
-console.log(_)
-console.log($)
-console.log(jQuery)
-console.log(Modernizr)
 
 var hash,
   visiblePage
