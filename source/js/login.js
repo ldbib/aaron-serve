@@ -7,6 +7,8 @@ require('jquery')
 require('foundation')
 require('foundationReveal')
 
+var entryError = require('./entryError.js')
+
 var $loginModal = $('#loginModal')
 
 var loggedIn = false
@@ -25,7 +27,9 @@ function hideLoginForms() {
 function displayLoginModal() {
   hideLoginForms()
   $loginModal.find('.login').show()
-  $loginModal.foundation('reveal', 'open')
+  if(!$loginModal.is('.open')) {
+    $loginModal.foundation('reveal', 'open')
+  }
 }
 
 function isLoggedIn(callback) {
@@ -55,9 +59,10 @@ $('#login-forgot').click(function() {
 $('#login-forgot-send').click(function() {
   var $email = $('#restore-email')
   if(!reEmailValidation.test($email.val())) {
-    alert('Ogiltig e-postadress!') // Placeholder
+    entryError.display($email, 'Ogiltig e-postadress!', true)
     return
   }
+  entryError.hide($email, true)
   $('#loginInformation').hide()
   hideLoginForms()
   $loginModal.find('.loading').show()
