@@ -47,8 +47,6 @@
     .row.medium-uncollapse.small-collapse.recovery-sent
       h4 Återställningsmeddelande skickat!
       div Ett lösenordsåterställningsmeddelande har skickats till den specifierade e-postadressen!
-      div
-        button#login-back-recovery.button.success.close(type='button') Tillbaka
     .row.medium-uncollapse.small-collapse.signup
       .large-3.medium-5.columns.show-for-medium-up
         label.right.inline(for='login-private-email') Privat e-postadress
@@ -77,8 +75,7 @@
       .small-12.columns.text-right
         button#login-button.button.success.login(type='button') Logga in
         button#login-new-create.button.success.signup(type='button') Skicka ansökan
-        button#login-new-abort.button.alert.signup(type='button') Avbryt ansökan
         button#login-new.button.info.login(type='button') Ansök om konto
         button#login-forgot.button.secondary.login(type='button') Glömt lösenordet?
         button#login-forgot-send.button.success.forgot(type='button') Skicka återställningsmail
-        button#login-forgot-abort.button.alert.forgot(type='button') Avbryt återställning
+        button#login-return.button.warning.close(type='button') Tillbaka till inloggningen
