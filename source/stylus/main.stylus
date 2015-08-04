@@ -19,5 +19,17 @@ option
 .small-margin-top
   margin-top: 10px
 
+/*
 #alertModal .close, #loginModal .close
   margin: 1.25rem 0 0
+*/
+
+#loginModal .button, #organizationModal .button
+  margin-bottom: 0.2rem
+
+@media only screen and (max-width: 40em)
+  .reveal-modal.open
+    position: fixed
+    overflow: scroll
+    height: 100%
+    max-height: 100%

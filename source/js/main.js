@@ -66,6 +66,38 @@ $('#navigation').add('#administration').find('li a[href^="#"]').click(function(e
   }
 })
 
+/**
+ * Disables scrolling of body when a modal is open
+ */
+$(document).on('open.fndtn.reveal', '[data-reveal]', function () {
+  var modal = $(this)
+  $('body').css({'max-height': '100%', 'height': '100%', 'overflow': 'hidden'})
+})
+
+/**
+ * Enables scrolling of body when no modals are open
+ */
+$(document).on('closed.fndtn.reveal', '[data-reveal]', function () {
+  var modal = $(this)
+  _.defer(function() {
+    if(!$('.reveal-modal').is('.open')) {
+      $('body').css({'max-height': 'none', 'height': 'auto', 'overflow': 'visible'})
+    }
+  })
+})
+
+/**
+ * Disables middle mouse scrolling when a modal is open.
+ * Source: http://stackoverflow.com/a/30423534/1294363
+ */
+document.body.onmousedown = function(e) {
+  if (e.button === 1) {
+    if($('.reveal-modal').is('.open')) {
+      return false
+    }
+  }
+}
+
 var organizations = [
   {name: 'Landstinget Blekinge', shortname: 'lb'},
   {name: 'Landstinget Dalarna', shortname: 'ld'},
@@ -98,5 +130,6 @@ _.forEach(organizations, function(organization) {
   })
   option.appendTo('#login-organization')
   option.clone().appendTo('#myAccount-organization')
+  option.clone().appendTo('#choose-organization')
 })
 

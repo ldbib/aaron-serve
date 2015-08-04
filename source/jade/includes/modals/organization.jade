@@ -1,9 +1,12 @@
 #organizationModal.reveal-modal(data-reveal='', aria-labelledby='organizationFormTitle', aria-hidden='true', role='dialog')
-  h3#organizationFormTitle Aaron inloggning
+  h3#organizationFormTitle Välj den organisation som du vill logga in på
   form
     .row.medium-uncollapse.small-collapse.signup.login
-      .large-3.medium-5.columns.show-for-medium-up
-        label.right.inline(for='login-organization') Organisation
-      .large-9.medium-7.small-12.columns
-        label.hide-for-medium-up(for='login-organization') Organisation
-        select#login-organization
+      .large-2.medium-4.columns.show-for-medium-up
+        label.right.inline(for='choose-organization') Organisation
+      .large-10.medium-8.small-12.columns
+        label.hide-for-medium-up(for='choose-organization') Organisation
+        select#choose-organization
+    .row.medium-uncollapse.small-collapse
+      .small-12.columns.text-right
+        button#choose-organization-button.button.success(type='button') Välj organization

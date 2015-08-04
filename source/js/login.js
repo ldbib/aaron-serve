@@ -10,9 +10,10 @@ require('foundationReveal')
 var entryError = require('./entryError.js')
 
 var $loginModal = $('#loginModal')
-var $orgModal = $('#orgModal')
+var $organizationModal = $('#organizationModal')
 
 var loggedIn = false
+var organization = null
 
 // StackOverflow RegEx Email validation: http://stackoverflow.com/a/46181/1294363
 var reEmailValidation = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
@@ -48,13 +49,15 @@ function displayLoginModal() {
 }
 
 /**
- * Displays the organization modal if it isn't shown.
+ * Displays the organization modal if it isn't shown. Is only supposed to be
+ *     shown if the user is a member of more than one organization. Can be
+ *     used to change the users current organization.
  *
  * @return {boolean} Returns true.
  */
 function displayOrganizationModal() {
-  if(!$orgModal.is('.open')) {
-    $orgModal.foundation('reveal', 'open')
+  if(!$organizationModal.is('.open')) {
+    $organizationModal.foundation('reveal', 'open')
   }
   return true
 }
@@ -84,8 +87,11 @@ function isLoggedIn(callback) {
 
 /** Attempts to sign in the user. */
 $('#login-button').click(function() {
-  loggedIn = true
-  $loginModal.foundation('reveal', 'close')
+  // Simulate a successful login
+  setTimeout(function() {
+    displayOrganizationModal()
+    loggedIn = true
+  }, 1000)
 })
 
 /** Shows the signup form for the user. */
@@ -125,6 +131,10 @@ $('#login-forgot-send').click(function() {
 /** Returns to the login form. */
 $('#login-return').click(function() {
   displayLoginModal()
+})
+
+$('#choose-organization-button').click(function() {
+  $organizationModal.foundation('reveal', 'close')
 })
 
 module.exports = {
