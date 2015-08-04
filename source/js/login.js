@@ -10,6 +10,7 @@ require('foundationReveal')
 var entryError = require('./entryError.js')
 
 var $loginModal = $('#loginModal')
+var $orgModal = $('#orgModal')
 
 var loggedIn = false
 
@@ -42,6 +43,18 @@ function displayLoginModal() {
   $loginModal.find('.login').show()
   if(!$loginModal.is('.open')) {
     $loginModal.foundation('reveal', 'open')
+  }
+  return true
+}
+
+/**
+ * Displays the organization modal if it isn't shown.
+ *
+ * @return {boolean} Returns true.
+ */
+function displayOrganizationModal() {
+  if(!$orgModal.is('.open')) {
+    $orgModal.foundation('reveal', 'open')
   }
   return true
 }
@@ -91,7 +104,7 @@ $('#login-forgot').click(function() {
 
 /** Submits the password recovery. */
 $('#login-forgot-send').click(function() {
-  var $email = $('#restore-email')
+  var $email = $('#login-email')
   // Validate the email address.
   if(!reEmailValidation.test($email.val())) {
     entryError.display($email, 'Ogiltig e-postadress!', true)

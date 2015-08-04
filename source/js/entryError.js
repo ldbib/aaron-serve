@@ -59,12 +59,11 @@ function hideError(jqObj, jqLabels) {
     return false
   }
   if(jqObj.next().is('small.error')) {
-    return true // Error is alredy removed or never existed.
+    jqObj.next('small.error').slideUp(function() {
+      jqObj.next('small.error').remove()
+      jqObj.removeClass('error')
+    })
   }
-  jqObj.next('small.error').slideUp(function() {
-    jqObj.next('small.error').remove()
-    jqObj.removeClass('error')
-  })
   if(typeof jqLabels === 'boolean') {
     if(jqLabels) {
       $('label[for='+jqObj.attr('id')+']').removeClass('error')

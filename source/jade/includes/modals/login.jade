@@ -6,7 +6,13 @@
     p
       | Inloggningsuppgifterna här är separata ifrån din organisations-/landstingsinloggning.
   form
-    .row.medium-uncollapse.small-collapse.signup.login
+    .row.medium-uncollapse.small-collapse.forgot.login
+      .large-3.medium-5.columns.show-for-medium-up
+        label.right.inline(for='login-email') E-postadress
+      .large-9.medium-7.small-12.columns
+        label.hide-for-medium-up(for='login-email') E-postadress
+        input#login-email(type='text', placeholder='E-postadress')
+    .row.medium-uncollapse.small-collapse.signup
       .large-3.medium-5.columns.show-for-medium-up
         label.right.inline(for='login-organization') Organisation
       .large-9.medium-7.small-12.columns
@@ -36,12 +42,6 @@
       .large-9.medium-7.small-12.columns
         label.hide-for-medium-up(for='login-email') Din jobbmail
         input#login-email(type='text', placeholder='Din jobbmail')
-    .row.medium-uncollapse.small-collapse.forgot
-      .large-4.medium-12.columns.show-for-large-up
-        label.right.inline(for='restore-email') E-postadress kopplad till ditt konto
-      .large-8.medium-12.small-12.columns
-        label.hide-for-large-up(for='restore-email') E-postadress kopplad till ditt konto
-        input#restore-email(type='text', placeholder='E-postadress kopplad till ditt konto')
     .row.medium-uncollapse.small-collapse.loading
       h4 Laddar...
     .row.medium-uncollapse.small-collapse.recovery-sent
@@ -53,12 +53,6 @@
       .large-9.medium-7.small-12.columns
         label.hide-for-medium-up(for='login-private-email') Privat e-postadress
         input#login-private-email(type='text', placeholder='Privat e-postadress')
-    .row.medium-uncollapse.small-collapse.signup.login
-      .large-3.medium-5.columns.show-for-medium-up
-        label.right.inline(for='login-username') Användarnamn
-      .large-9.medium-7.small-12.columns
-        label.hide-for-medium-up(for='login-username') Användarnamn
-        input#login-username(type='text', placeholder='Användarnamn')
     .row.medium-uncollapse.small-collapse.signup.login
       .large-3.medium-5.columns.show-for-medium-up
         label.right.inline(for='login-password') Lösenord
