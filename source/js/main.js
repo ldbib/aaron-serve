@@ -128,7 +128,7 @@ _.forEach(organizations, function(organization) {
     value: organization.shortname,
     text: organization.name
   })
-  option.appendTo('#login-organization')
+  option.appendTo('#signup-organization')
   option.clone().appendTo('#myAccount-organization')
   option.clone().appendTo('#choose-organization')
 })

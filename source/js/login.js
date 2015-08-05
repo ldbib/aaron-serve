@@ -179,6 +179,51 @@ $('#login-forgot-send').click(function() {
   }, 1000)
 })
 
+/**
+ * Submits a new registration.
+ */
+$('#signup-button').click(function() {
+  var $organization = $('#signup-organization')
+  var $firstName = $('#signup-firstname')
+  var $lastName = $('#signup-lastname')
+  var $workplace = $('#signup-workplace')
+  var $email = $('#signup-email')
+  var $privateEmail = $('#signup-private-email')
+  var $password = $('#signup-password')
+  var $validatePassword = $('#signup-validate-password')
+  var err = false
+  /**
+   * Checks email before attemting to login. Informs the users of errors.
+   */
+  if(!reEmailValidation.test($email.val())) {
+    entryError.display($email, 'Ogiltig e-postadress!', true)
+    err = true
+  } else {
+    entryError.hide($email, true)
+  }
+  /**
+   * Checks password before attemting to login. Informs the users of errors.
+   */
+  if($password.val().length === 0) {
+    entryError.display($password, 'Du måste fylla i ett lösenord!', true)
+    err = true
+  } else {
+    entryError.hide($password, true)
+  }
+  /**
+   * Stop login if error has occured.
+   */
+  if(err) {
+    return
+  }
+
+  // Simulate a successful login
+  setTimeout(function() {
+    displayOrganizationModal()
+    loggedIn = true
+  }, 1000)
+})
+
 /** Returns to the login form. */
 $('#login-return').click(function() {
   displayLoginModal()
