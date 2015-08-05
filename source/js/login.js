@@ -24,11 +24,25 @@ var reEmailValidation = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\"
  * @return {boolean} Returns true.
  */
 function hideLoginForms() {
+  /**
+   * Resets errors on inputfields.
+   */
+  $loginModal.find('input').each(function() {
+    if($(this).is('.error')) {
+      entryError.hide($(this), true)
+    }
+  })
+  /**
+   * Hides all of the login forms.
+   */
   $loginModal.find('.signup').hide()
   $loginModal.find('.login').hide()
   $loginModal.find('.forgot').hide()
   $loginModal.find('.loading').hide()
   $loginModal.find('.recovery-sent').hide()
+  /**
+   * Hides the return button.
+   */
   $('#login-return').hide()
   return true
 }
@@ -42,7 +56,6 @@ function displayLoginModal() {
   hideLoginForms()
   $('#loginInformation').show()
   $loginModal.find('.login').show()
-  entryError.hide($('#login-email'), true)
   if(!$loginModal.is('.open')) {
     $loginModal.foundation('reveal', 'open')
   }
@@ -88,6 +101,34 @@ function isLoggedIn(callback) {
 
 /** Attempts to sign in the user. */
 $('#login-button').click(function() {
+  var $email = $('#login-email')
+  var $password = $('#login-password')
+  var err = false
+  /**
+   * Checks email before attemting to login. Informs the users of errors.
+   */
+  if(!reEmailValidation.test($email.val())) {
+    entryError.display($email, 'Ogiltig e-postadress!', true)
+    err = true
+  } else {
+    entryError.hide($email, true)
+  }
+  /**
+   * Checks password before attemting to login. Informs the users of errors.
+   */
+  if($password.val().length === 0) {
+    entryError.display($password, 'Du måste fylla i ett lösenord!', true)
+    err = true
+  } else {
+    entryError.hide($password, true)
+  }
+  /**
+   * Stop login if error has occured.
+   */
+  if(err) {
+    return
+  }
+
   // Simulate a successful login
   setTimeout(function() {
     displayOrganizationModal()
