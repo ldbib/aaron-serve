@@ -42,6 +42,7 @@ function displayLoginModal() {
   hideLoginForms()
   $('#loginInformation').show()
   $loginModal.find('.login').show()
+  entryError.hide($('#login-email'), true)
   if(!$loginModal.is('.open')) {
     $loginModal.foundation('reveal', 'open')
   }
