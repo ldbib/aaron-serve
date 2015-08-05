@@ -12,6 +12,7 @@ var entryError = require('./entryError.js')
 var $loginModal = $('#loginModal')
 var $organizationModal = $('#organizationModal')
 
+var currentForm = null
 var loggedIn = false
 var organization = null
 
@@ -59,6 +60,7 @@ function displayLoginModal() {
   if(!$loginModal.is('.open')) {
     $loginModal.foundation('reveal', 'open')
   }
+  currentForm = 'login'
   return true
 }
 
@@ -98,6 +100,11 @@ function isLoggedIn(callback) {
   }, 10)
 }
 
+$('#login-email, #login-password').keyup(function(event) {
+  if(event.keyCode === 13 && currentForm === 'login') {
+    $('#login-button').click()
+  }
+})
 
 /** Attempts to sign in the user. */
 $('#login-button').click(function() {
@@ -141,6 +148,7 @@ $('#login-new').click(function() {
   hideLoginForms()
   renderBackButton('Avbryt ansökan')
   $loginModal.find('.signup').show()
+  currentForm = 'signup'
 })
 
 /** Shows the password recovery form. */
@@ -148,6 +156,7 @@ $('#login-forgot').click(function() {
   hideLoginForms()
   renderBackButton('Avbryt återställning')
   $loginModal.find('.forgot').show()
+  currentForm = 'forgot'
 })
 
 /** Submits the password recovery. */
