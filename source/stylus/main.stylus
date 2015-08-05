@@ -27,9 +27,9 @@ option
 #loginModal .button, #organizationModal .button
   margin-bottom: 0.2rem
 
-@media only screen and (max-width: 40em)
-  .reveal-modal.open
-    position: fixed
-    overflow: scroll
-    height: 100%
-    max-height: 100%
+//@media only screen and (max-width: 40em)
+.reveal-modal
+  top: 0
+  position: fixed
+  max-height: 100%
+  overflow: auto
