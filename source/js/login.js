@@ -8,6 +8,7 @@ require('foundation')
 require('foundationReveal')
 
 var entryError = require('./entryError.js')
+var config = require('../../config.js')
 
 var $loginModal = $('#loginModal')
 var $organizationModal = $('#organizationModal')
@@ -137,10 +138,35 @@ $('#login-button').click(function() {
   }
 
   // Simulate a successful login
-  setTimeout(function() {
-    displayOrganizationModal()
-    loggedIn = true
-  }, 1000)
+  $.ajax({
+    url: config.authServer + '/authenticate',
+    data: {
+      u: $email.val(),
+      p: $password.val()
+    },
+    method: 'POST',
+    success: function(data, textStatus, jqXHR) {
+      if(data.auth) {
+        displayOrganizationModal()
+        loggedIn = true
+      }
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      var extraInfo
+      if(jqXHR.responseJSON) {
+        extraInfo = jqXHR.responseJSON.message
+      } else {
+        extraInfo = jqXHR.responseText
+      }
+      if(jqXHR.status === 400) {
+        entryError.display($password, 'Inloggningsuppgifter felaktiga!', true)
+      } else if(jqXHR.status >= 500 && jqXHR.status < 600) {
+        alert('Servern kunde inte ta hand om din inloggning. Försök igen senare. Felmeddelande: '+extraInfo)
+      } else {
+        alert('Ett okänt fel inträffade. Rapportera gärna detta! Felmeddelande: '+extraInfo)
+      }
+    }
+  })
 })
 
 /** Shows the signup form for the user. */

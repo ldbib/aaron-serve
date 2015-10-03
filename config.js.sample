@@ -1,0 +1,7 @@
+/* jshint asi: true, jquery: true, node: true */
+
+'use strict'
+
+module.exports = {
+  authServer: 'http://auth.example.com'
+}
