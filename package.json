@@ -9,15 +9,15 @@
   "dependencies": {},
   "devDependencies": {
     "browserify": "latest",
-    "browserify-shim": "^3.8.10",
+    "browserify-shim": "latest",
     "exorcist": "latest",
     "jade": "latest",
     "live-reload": "^1.1.0",
-    "minimist": "^1.1.2",
+    "minimist": "^1.2.0",
     "parallelshell": "latest",
     "stylus": "latest",
     "watch": "latest",
-    "watchify": "^3.3.0"
+    "watchify": "^3.4.0"
   },
   "scripts": {
     "test": "echo \"Achtung!\"",
