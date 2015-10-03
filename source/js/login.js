@@ -59,9 +59,14 @@ function displayLoginModal() {
   $('#loginInformation').show()
   $loginModal.find('.login').show()
   if(!$loginModal.is('.open')) {
+    $(document).one('opened.fndtn.reveal', $loginModal, function () {
+      console.log('shown!')
+      $('#login-email').focus()
+    })
     $loginModal.foundation('reveal', 'open')
   }
   currentForm = 'login'
+  $('#login-email').focus()
   return true
 }
 
