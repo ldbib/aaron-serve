@@ -20,9 +20,15 @@ function displayError(jqObj, errorMessage, jqLabels) {
   if(typeof jqObj !== 'object' || jqObj.length === 0 || typeof errorMessage !== 'string') {
     return false
   }
+  var jqObjNext = jqObj.next()
   // If the error message already exists, replace the text.
-  if(jqObj.next().is('small.error')) {
-    jqObj.next().text(errorMessage)
+  if(jqObjNext.is('small.error')) {
+    jqObjNext.text(errorMessage)
+    if(jqObjNext.is('.hiding')) {
+      jqObjNext.stop().removeClass('hiding').addClass('showing').slideDown(function() {
+        jqObjNext.removeClass('showing')
+      })
+    }
     return true
   }
   jqObj.addClass('error').after($( '<small/>', {
@@ -33,7 +39,10 @@ function displayError(jqObj, errorMessage, jqLabels) {
     }
   }))
   // Use the jQuery slideDown() effect on the error elemement.
-  jqObj.next().hide().slideDown()
+  jqObjNext = jqObj.next()
+  jqObjNext.hide().addClass('showing').slideDown(function() {
+    jqObjNext.removeClass('showing')
+  })
   if(typeof jqLabels === 'boolean') {
     if(jqLabels) {
       $('label[for='+jqObj.attr('id')+']').addClass('error')
@@ -62,7 +71,7 @@ function hideError(jqObj, jqLabels) {
     jqObj.next('small.error').slideUp(function() {
       jqObj.next('small.error').remove()
       jqObj.removeClass('error')
-    })
+    }).addClass('hiding')
   }
   if(typeof jqLabels === 'boolean') {
     if(jqLabels) {
