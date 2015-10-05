@@ -60,7 +60,6 @@ function displayLoginModal() {
   $loginModal.find('.login').show()
   if(!$loginModal.is('.open')) {
     $(document).one('opened.fndtn.reveal', $loginModal, function () {
-      console.log('shown!')
       $('#login-email').focus()
     })
     $loginModal.foundation('reveal', 'open')
