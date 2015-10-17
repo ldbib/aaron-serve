@@ -8,6 +8,7 @@ nav#top-bar.top-bar(data-topbar='', role='navigation')
         span Menu
   section.top-bar-section
     // Right Nav Section
+    ul.right
     ul.right#navigation
       li: a(href='#start') Startsida
       li: a(href='#myAccount') Mitt konto
@@ -18,4 +19,4 @@ nav#top-bar.top-bar(data-topbar='', role='navigation')
           li: a(href='#applications') Applikationer
           li: a(href='#groups') Grupper
           li: a(href='#permissions') Beh&ouml;righeter
-      li: a(href='#') Logga ut
+      li: a(href='#')#logout Logga ut
