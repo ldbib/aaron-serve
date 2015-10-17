@@ -9,13 +9,12 @@ require('foundationReveal')
 
 var entryError = require('./entryError.js')
 var config = require('../../config.js')
+var organization = require('./organization.js')
 
 var $loginModal = $('#loginModal')
-var $organizationModal = $('#organizationModal')
 
 var currentForm = null
 var loggedIn = false
-var organization = null
 
 // StackOverflow RegEx Email validation: http://stackoverflow.com/a/46181/1294363
 var reEmailValidation = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
@@ -69,19 +68,6 @@ function displayLoginModal() {
   return true
 }
 
-/**
- * Displays the organization modal if it isn't shown. Is only supposed to be
- *     shown if the user is a member of more than one organization. Can be
- *     used to change the users current organization.
- *
- * @return {boolean} Returns true.
- */
-function displayOrganizationModal() {
-  if(!$organizationModal.is('.open')) {
-    $organizationModal.foundation('reveal', 'open')
-  }
-  return true
-}
 
 /**
  * Shows the return to login button and changes it's text.
@@ -96,13 +82,25 @@ function renderBackButton(message) {
 
 /**
  * Checks whether the user is signed in.
- *
- * @return {boolean} Returns true if the user is logged in. Otherwise false.
+
+ * @param {function} callback A function to callback with a boolean as it's first parameter.
  */
 function isLoggedIn(callback) {
-  setTimeout(function() {
-    callback(loggedIn)
-  }, 10)
+  $.ajax({
+    url: config.authServer + '/authenticated',
+    method: 'GET',
+    success: function(data, textStatus, jqXHR) {
+      callback(true)
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      if(jqXHR.status === 403) {
+        return callback(false)
+      }
+      setTimeout(function() {
+        isLoggedIn(callback)
+      }, 1000)
+    }
+  })
 }
 
 $('#login-email, #login-password').keyup(function(event) {
@@ -113,6 +111,7 @@ $('#login-email, #login-password').keyup(function(event) {
 
 /** Attempts to sign in the user. */
 $('#login-button').click(function() {
+  $(this).text('Laddar...').attr('disabled', 'disabled')
   var $email = $('#login-email')
   var $password = $('#login-password')
   var err = false
@@ -138,6 +137,7 @@ $('#login-button').click(function() {
    * Stop login if error has occured.
    */
   if(err) {
+    $('#login-button').text('Logga in').removeAttr('disabled')
     return
   }
 
@@ -150,12 +150,19 @@ $('#login-button').click(function() {
     },
     method: 'POST',
     success: function(data, textStatus, jqXHR) {
+      $('#login-button').text('Logga in').removeAttr('disabled')
       if(data.auth) {
-        displayOrganizationModal()
         loggedIn = true
+        organization.getMy(function(err, data) {
+          if(err) {
+            return alert('Misslyckades att ladda dina organisationer. Ladda om sidan för att försöka igen! Debugdata: '+err.textStatus)
+          }
+          organization.choose(data)
+        })
       }
     },
     error: function(jqXHR, textStatus, errorThrown) {
+      $('#login-button').text('Logga in').removeAttr('disabled')
       var extraInfo
       if(jqXHR.responseJSON) {
         extraInfo = jqXHR.responseJSON.message
@@ -223,7 +230,7 @@ $('#signup-button').click(function() {
   var $validatePassword = $('#signup-validate-password')
   var err = false
   /**
-   * Checks email before attemting to login. Informs the users of errors.
+   * Checks email before attemting to signup. Informs the users of errors.
    */
   if(!reEmailValidation.test($email.val())) {
     entryError.display($email, 'Ogiltig e-postadress!', true)
@@ -232,7 +239,7 @@ $('#signup-button').click(function() {
     entryError.hide($email, true)
   }
   /**
-   * Checks password before attemting to login. Informs the users of errors.
+   * Checks password before attemting to signup. Informs the users of errors.
    */
   if($password.val().length === 0) {
     entryError.display($password, 'Du måste fylla i ett lösenord!', true)
@@ -240,17 +247,19 @@ $('#signup-button').click(function() {
   } else {
     entryError.hide($password, true)
   }
+
+  // TODO: more validation
+
   /**
-   * Stop login if error has occured.
+   * Stop signup if error has occured.
    */
   if(err) {
     return
   }
 
-  // Simulate a successful login
+  // Simulate a successful signup
   setTimeout(function() {
-    displayOrganizationModal()
-    loggedIn = true
+    // TODO
   }, 1000)
 })
 
@@ -259,9 +268,6 @@ $('#login-return').click(function() {
   displayLoginModal()
 })
 
-$('#choose-organization-button').click(function() {
-  $organizationModal.foundation('reveal', 'close')
-})
 
 module.exports = {
   loginModal: $loginModal,

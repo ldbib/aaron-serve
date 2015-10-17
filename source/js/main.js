@@ -18,6 +18,7 @@ require('foundationTopbar')
 require('lodash')
 
 var login = require('./login.js')
+var organization = require('./organization.js')
 
 var hash,
   visiblePage
