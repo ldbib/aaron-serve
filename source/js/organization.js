@@ -29,8 +29,11 @@ function chooseOrganization(organizations) {
  * @return {boolean} Returns true.
  */
 function displayOrganizationModal() {
+
+  // TODO add modal manager to manage opening of modals.
+
   if(!$organizationModal.is('.open')) {
-    $organizationModal.foundation('reveal', 'open')
+    $organizationModal.addClass('opening').foundation('reveal', 'open')
   }
   return true
 }
@@ -48,10 +51,18 @@ function getMyOrganizations(callback) {
   })
 }
 
+$organizationModal.on('opened.fndtn.reveal', function() {
+  $organizationModal.removeClass('opening')
+})
+$organizationModal.on('closed.fndtn.reveal', function() {
+  $organizationModal.removeClass('closing')
+})
+
+
 $('#choose-organization-button').click(function() {
   exports.currentOrganization = $organizationChooserSelect.val()
   Cookies.set('aaron-organization', exports.currentOrganization, { expires: 365 })
-  $organizationModal.foundation('reveal', 'close')
+  $organizationModal.addClass('closing').foundation('reveal', 'close')
 })
 
 exports.choose = chooseOrganization

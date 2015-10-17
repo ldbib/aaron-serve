@@ -31,7 +31,8 @@ $(document).foundation({
   },
   reveal: {
     close_on_background_click: false,
-    close_on_esc: false
+    close_on_esc: false,
+    multiple_opened: true
   }
 })
 
@@ -75,6 +76,9 @@ if(hash) {
 
 $('#navigation').add('#administration').find('li a[href^="#"]').click(function(event) {
   var $this = $(this)
+  if($this.attr('href') === '#') {
+    return
+  }
   var page = $('.pages'+$this.attr('href'))
   var pageId = $('.pages'+$this.attr('href')).attr('id')
   if(page.length > 0) {

@@ -10,6 +10,7 @@ require('foundationReveal')
 var entryError = require('./entryError.js')
 var config = require('../../config.js')
 var organization = require('./organization.js')
+var loading = require('./loading.js')
 
 var $loginModal = $('#loginModal')
 
@@ -61,6 +62,7 @@ function displayLoginModal() {
     $(document).one('opened.fndtn.reveal', $loginModal, function () {
       $('#login-email').focus()
     })
+    // TODO add modal manager to manage opening of modals.
     $loginModal.foundation('reveal', 'open')
   }
   currentForm = 'login'
@@ -102,6 +104,14 @@ function isLoggedIn(callback) {
     }
   })
 }
+
+$loginModal.on('opened.fndtn.reveal', function() {
+  $loginModal.removeClass('opening')
+})
+$loginModal.on('closed.fndtn.reveal', function() {
+  $loginModal.removeClass('closing')
+})
+
 
 $('#login-email, #login-password').keyup(function(event) {
   if(event.keyCode === 13 && currentForm === 'login') {
@@ -153,6 +163,8 @@ $('#login-button').click(function() {
       $('#login-button').text('Logga in').removeAttr('disabled')
       if(data.auth) {
         loggedIn = true
+        $loginModal.addClass('closing').foundation('reveal', 'close')
+        $password.val('')
         organization.getMy(function(err, data) {
           if(err) {
             return alert('Misslyckades att ladda dina organisationer. Ladda om sidan för att försöka igen! Debugdata: '+err.textStatus)
@@ -266,6 +278,33 @@ $('#signup-button').click(function() {
 /** Returns to the login form. */
 $('#login-return').click(function() {
   displayLoginModal()
+})
+
+
+$('#logout').click(function() {
+  loading.display()
+  $.ajax({
+    url: config.authServer + '/deauthenticate',
+    method: 'POST',
+    success: function(data, textStatus, jqXHR) {
+      loading.hide()
+      displayLoginModal()
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      var extraInfo
+      loading.hide()
+      if(jqXHR.responseJSON) {
+        extraInfo = jqXHR.responseJSON.message
+      } else {
+        extraInfo = jqXHR.responseText
+      }
+      if(jqXHR.status >= 500 && jqXHR.status < 600) {
+        alert('Servern kunde inte ta hand om din inloggning. Försök igen senare. Felmeddelande: '+extraInfo)
+      } else {
+        alert('Ett okänt fel inträffade. Rapportera gärna detta! Felmeddelande: '+extraInfo)
+      }
+    }
+  })
 })
 
 
