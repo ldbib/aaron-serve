@@ -6,7 +6,9 @@
   "directories": {
     "test": "test"
   },
-  "dependencies": {},
+  "dependencies": {
+    "js-cookie": "^2.0.3"
+  },
   "devDependencies": {
     "browserify": "latest",
     "browserify-shim": "latest",
@@ -47,24 +49,52 @@
   "license": "AGPL-3.0",
   "private": true,
   "browser": {
-    "jquery":             "./bower_components/jquery/dist/jquery.js",
-    "jqueryPlaceholder":  "./bower_components/jquery-placeholder/jquery.placeholder.js",
-    "backbone":           "./bower_components/backbone/backbone.js",
-    "fastclick":          "./bower_components/fastclick/lib/fastclick.js",
-    "lodash":             "./bower_components/lodash/lodash.js",
-    "foundation":         "./bower_components/foundation/js/foundation/foundation.js",
-    "foundationTopbar":   "./bower_components/foundation/js/foundation/foundation.reveal.js",
-    "foundationReveal":   "./bower_components/foundation/js/foundation/foundation.topbar.js",
-    "modernizr":          "./bower_components/modernizr/modernizr.js"
+    "jquery": "./bower_components/jquery/dist/jquery.js",
+    "jqueryPlaceholder": "./bower_components/jquery-placeholder/jquery.placeholder.js",
+    "backbone": "./bower_components/backbone/backbone.js",
+    "fastclick": "./bower_components/fastclick/lib/fastclick.js",
+    "lodash": "./bower_components/lodash/lodash.js",
+    "foundation": "./bower_components/foundation/js/foundation/foundation.js",
+    "foundationTopbar": "./bower_components/foundation/js/foundation/foundation.reveal.js",
+    "foundationReveal": "./bower_components/foundation/js/foundation/foundation.topbar.js",
+    "modernizr": "./bower_components/modernizr/modernizr.js"
   },
   "browserify-shim": {
-    "jquery": { "exports": "$"},
-    "backbone": { "exports": "Backbone", "depends": ["jquery", "lodash"] },
-    "lodash": { "exports": "_" },
-    "foundation": { "depends": ["jquery", "jqueryPlaceholder", "fastclick"] },
-    "foundationReveal": { "depends": ["jquery", "foundation"] },
-    "foundationTopbar": { "depends": ["jquery", "foundation"] },
-    "modernizr": { "exports": "Modernizr" }
+    "jquery": {
+      "exports": "$"
+    },
+    "backbone": {
+      "exports": "Backbone",
+      "depends": [
+        "jquery",
+        "lodash"
+      ]
+    },
+    "lodash": {
+      "exports": "_"
+    },
+    "foundation": {
+      "depends": [
+        "jquery",
+        "jqueryPlaceholder",
+        "fastclick"
+      ]
+    },
+    "foundationReveal": {
+      "depends": [
+        "jquery",
+        "foundation"
+      ]
+    },
+    "foundationTopbar": {
+      "depends": [
+        "jquery",
+        "foundation"
+      ]
+    },
+    "modernizr": {
+      "exports": "Modernizr"
+    }
   },
   "browserify": {
     "transform": [

@@ -8,6 +8,8 @@ require('jquery')
 
 require('jqueryPlaceholder')
 
+var Cookies = require('js-cookie')
+
 var attachFastClick = require('fastclick')
 attachFastClick(document.body)
 
@@ -35,8 +37,26 @@ $(document).foundation({
 
 login.isLoggedIn(function(status) {
   if(!status) {
-    login.displayModal()
+    return login.displayModal()
   }
+  organization.getMy(function(err, data) {
+    if(err) {
+      return alert('Misslyckades att ladda dina organisationer. Ladda om sidan för att försöka igen! Debugdata: '+err.textStatus)
+    }
+    if(!Cookies.get('aaron-organization')) {
+      return organization.choose(data)
+    }
+    var valid = false
+    for(var i = 0, ii = data.length; i<ii; i++) {
+      if(data[i].organization_shortname === Cookies.get('aaron-organization')) {
+        valid = true
+        break
+      }
+    }
+    if(!valid) {
+      return organization.choose(data)
+    }
+  })
 })
 
 $('.pages').hide()

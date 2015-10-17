@@ -4,6 +4,8 @@
 
 require('jquery')
 
+var Cookies = require('js-cookie')
+
 var config = require('../../config.js')
 
 var $organizationModal = $('#organizationModal')
@@ -48,6 +50,7 @@ function getMyOrganizations(callback) {
 
 $('#choose-organization-button').click(function() {
   exports.currentOrganization = $organizationChooserSelect.val()
+  Cookies.set('aaron-organization', exports.currentOrganization, { expires: 365 })
   $organizationModal.foundation('reveal', 'close')
 })
 
