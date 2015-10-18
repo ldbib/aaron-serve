@@ -24,7 +24,7 @@
   },
   "scripts": {
     "test": "echo \"Achtung!\"",
-    "test:jshint": "",
+    "test:jshint": "jshint source/js/*.js",
     "prebuild": "npm run clean -s",
     "clean": "rm -r dist/*",
     "build": "npm run build:js && npm run build:css && npm run build:html && npm run build:fonts && npm run build:images",

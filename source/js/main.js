@@ -20,8 +20,10 @@ require('foundationTopbar');
 
 var _ = require('lodash');
 
-var login = require('./login.js');
+var login        = require('./login.js');
 var organization = require('./organization.js');
+
+var organizations = [];
 
 var hash,
   visiblePage;
@@ -93,68 +95,19 @@ $('#navigation').add('#administration').find('li a[href^="#"]').click(function(e
   }
 });
 
-/**
- * Disables scrolling of body when a modal is open
- */
-$('body').on('open.fndtn.reveal', '[data-reveal]', function () {
-  $('body').css({'max-height': '100%', 'height': '100%', 'overflow': 'hidden'});
-});
-
-/**
- * Enables scrolling of body when no modals are open
- */
-$('body').on('closed.fndtn.reveal', '[data-reveal]', function () {
-  _.defer(function() {
-    if(!$('.reveal-modal').is('.open')) {
-      $('body').css({'max-height': 'none', 'height': 'auto', 'overflow': 'visible'});
-    }
-  });
-});
-
-/**
- * Disables middle mouse scrolling when a modal is open.
- * Source: http://stackoverflow.com/a/30423534/1294363
- */
-$('body').on('mousedown', function(e) {
-  if (e.button === 1) {
-    if($('.reveal-modal').is('.open')) {
-      return false;
-    }
+organization.getAll(function(err, data) {
+  if(err) {
+    // TODO: non obtrusive alert
+    return alert('Något gick fel vid hämtningen av data ifrån servern. Prova att ladda om sidan! Debug', err.textStatus);
   }
-});
-
-var organizations = [
-  {name: 'Landstinget Blekinge', shortname: 'lb'},
-  {name: 'Landstinget Dalarna', shortname: 'ld'},
-  {name: 'EiRA/Externa vårdgivare', shortname: 'eira'},
-  {name: 'Region Gotland', shortname: 'gotland'},
-  {name: 'Region Gävleborg', shortname: 'rg'},
-  {name: 'Region Halland', shortname: 'regionhalland'},
-  {name: 'Region Jämtland Härjedalen', shortname: 'rjh'},
-  {name: 'Region Jönköpings län', shortname: 'rjl'},
-  {name: 'Landstinget i Kalmar län', shortname: 'ltkalmar'},
-  {name: 'Region Kronoberg', shortname: 'kronoberg'},
-  {name: 'Norrbottens läns landsting', shortname: 'nll'},
-  {name: 'Region Skåne', shortname: 'skane'},
-  {name: 'Stockholms läns landsting', shortname: 'sll'},
-  {name: 'Landstinget Sörmland', shortname: 'ls'},
-  {name: 'Landstinget i Uppsala län', shortname: 'uppsala'},
-  {name: 'Landstinget i Värmland', shortname: 'liv'},
-  {name: 'Region Västerbotten', shortname: 'vll'},
-  {name: 'Landstinget Västernorrland', shortname: 'lvn'},
-  {name: 'Landstinget Västmanland', shortname: 'ltv'},
-  {name: 'Västra Götalandsregionen', shortname: 'vgr'},
-  {name: 'Region Örebro län', shortname: 'rol'},
-  {name: 'Region Östergötland', shortname: 'lio'}
-];
-
-_.forEach(organizations, function(organization) {
-  var option = $('<option></option>', {
-    value: organization.shortname,
-    text: organization.name
+  _.forEach(organizations, function(organization) {
+    var option = $('<option></option>', {
+      value: organization.shortname,
+      text: organization.name
+    });
+    option.appendTo('#signup-organization');
+    option.clone().appendTo('#myAccount-organization');
+    option.clone().appendTo('#choose-organization');
   });
-  option.appendTo('#signup-organization');
-  option.clone().appendTo('#myAccount-organization');
-  option.clone().appendTo('#choose-organization');
 });
 

@@ -7,10 +7,11 @@ require('jquery');
 require('foundation');
 require('foundationReveal');
 
-var entryError = require('./entryError.js');
-var config = require('../../config.js');
+var entryError   = require('./entryError.js');
+var config       = require('../../config.js');
 var organization = require('./organization.js');
-var loading = require('./loading.js');
+var loading      = require('./loading.js');
+var modals       = require('./modals.js');
 
 var $loginModal = $('#loginModal');
 
@@ -62,8 +63,7 @@ function displayLoginModal() {
     $('body').one('opened.fndtn.reveal', $loginModal, function () {
       $('#login-email').focus();
     });
-    // TODO add modal manager to manage opening of modals.
-    $loginModal.foundation('reveal', 'open');
+    modals.open($loginModal);
   }
   currentForm = 'login';
   $('#login-email').focus();
@@ -104,14 +104,6 @@ function isLoggedIn(callback) {
     }
   });
 }
-
-$loginModal.on('opened.fndtn.reveal', function() {
-  $loginModal.removeClass('opening');
-});
-$loginModal.on('closed.fndtn.reveal', function() {
-  $loginModal.removeClass('closing');
-});
-
 
 $('#login-email, #login-password').keyup(function(event) {
   if(event.keyCode === 13 && currentForm === 'login') {
@@ -163,7 +155,7 @@ $('#login-button').click(function() {
       $('#login-button').text('Logga in').removeAttr('disabled');
       if(data.auth) {
         loggedIn = true;
-        $loginModal.addClass('closing').foundation('reveal', 'close');
+        modals.close($loginModal);
         $password.val('');
         organization.getMy(function(err, data) {
           if(err) {
@@ -285,17 +277,17 @@ $('#login-return').click(function() {
 
 
 $('#logout').click(function() {
-  loading.display();
+  loading.open();
   $.ajax({
     url: config.authServer + '/deauthenticate',
     method: 'POST',
     success: function(/*data, textStatus, jqXHR*/) {
-      loading.hide();
+      loading.close();
       displayLoginModal();
     },
     error: function(jqXHR/*, textStatus, errorThrown*/) {
       var extraInfo;
-      loading.hide();
+      loading.close();
       if(jqXHR.responseJSON) {
         extraInfo = jqXHR.responseJSON.message;
       } else {

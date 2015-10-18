@@ -4,9 +4,13 @@
 
 require('jquery');
 
+require('foundation');
+require('foundationReveal');
+
 var Cookies = require('js-cookie');
 
 var config = require('../../config.js');
+var modals = require('./modals.js');
 
 var $organizationModal = $('#organizationModal');
 var $organizationChooserSelect = $organizationModal.find('#choose-organization');
@@ -29,11 +33,8 @@ function chooseOrganization(organizations) {
  * @return {boolean} Returns true.
  */
 function displayOrganizationModal() {
-
-  // TODO add modal manager to manage opening of modals.
-
   if(!$organizationModal.is('.open')) {
-    $organizationModal.addClass('opening').foundation('reveal', 'open');
+    modals.open($organizationModal);
   }
   return true;
 }
@@ -50,21 +51,36 @@ function getMyOrganizations(callback) {
     }
   });
 }
-
-$organizationModal.on('opened.fndtn.reveal', function() {
-  $organizationModal.removeClass('opening');
-});
-$organizationModal.on('closed.fndtn.reveal', function() {
-  $organizationModal.removeClass('closing');
-});
-
+function getAllOrganizations(callback, retries) {
+  $.ajax({
+    url: config.authServer + '/organization',
+    method: 'GET',
+    success: function(data/*, textStatus, jqXHR*/) {
+      callback(null, data);
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      if(!retries) {
+        retries = 1;
+      } else {
+        retries++;
+      }
+      if(retries > 5) {
+        return callback({jqXHR: jqXHR, textStatus: textStatus, errorThrown: errorThrown}, null);
+      }
+      setTimeout(function() {
+        getAllOrganizations(callback, retries);
+      }, 333);
+    }
+  });
+}
 
 $('#choose-organization-button').click(function() {
   exports.currentOrganization = $organizationChooserSelect.val();
   Cookies.set('aaron-organization', exports.currentOrganization, { expires: 365 });
-  $organizationModal.addClass('closing').foundation('reveal', 'close');
+  modals.close($organizationModal);
 });
 
 exports.choose = chooseOrganization;
-exports.getMy = getMyOrganizations;
+exports.getMy  = getMyOrganizations;
+exports.getAll = getAllOrganizations;
 exports.currentOrganization = null;

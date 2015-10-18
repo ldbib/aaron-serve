@@ -7,6 +7,8 @@ require('jquery');
 require('foundation');
 require('foundationReveal');
 
+var modals = require('./modals.js');
+
 var $alertModal = $('#alertModal');
 
 function displayModal(title, message, html) {
@@ -16,11 +18,11 @@ function displayModal(title, message, html) {
   } else {
     $alertModal.find('.modal-content').text(title);
   }
-  $alertModal.foundation('reveal', 'open');
+  modals.open($alertModal);
 }
 
 $alertModal.find('.close').click(function() {
-  $alertModal.foundation('reveal', 'close');
+  modals.close($alertModal);
 });
 
 module.exports = {
