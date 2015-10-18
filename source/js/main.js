@@ -1,31 +1,32 @@
-/* jshint asi: true, jquery: true */
+/* jshint jquery: true */
+/* global window: false */
 
-'use strict'
+'use strict';
 
-require('modernizr')
+require('modernizr');
 
-require('jquery')
+require('jquery');
 
-require('jqueryPlaceholder')
+require('jqueryPlaceholder');
 
-var Cookies = require('js-cookie')
+var Cookies = require('js-cookie');
 
-var attachFastClick = require('fastclick')
-attachFastClick(document.body)
+var attachFastClick = require('fastclick');
+attachFastClick($('body'));
 
-require('foundation')
-require('foundationReveal')
-require('foundationTopbar')
+require('foundation');
+require('foundationReveal');
+require('foundationTopbar');
 
-require('lodash')
+var _ = require('lodash');
 
-var login = require('./login.js')
-var organization = require('./organization.js')
+var login = require('./login.js');
+var organization = require('./organization.js');
 
 var hash,
-  visiblePage
+  visiblePage;
 
-$(document).foundation({
+$('body').foundation({
   topbar: {
     mobile_show_parent_link: false
   },
@@ -34,94 +35,93 @@ $(document).foundation({
     close_on_esc: false,
     multiple_opened: true
   }
-})
+});
 
 login.isLoggedIn(function(status) {
   if(!status) {
-    return login.displayModal()
+    return login.displayModal();
   }
   organization.getMy(function(err, data) {
     if(err) {
-      return alert('Misslyckades att ladda dina organisationer. Ladda om sidan för att försöka igen! Debugdata: '+err.textStatus)
+      // TODO: replace alerts with something less intrusive.
+      return alert('Misslyckades att ladda dina organisationer. Ladda om sidan för att försöka igen! Debugdata: '+err.textStatus); // jshint ignore:line
     }
     if(!Cookies.get('aaron-organization')) {
-      return organization.choose(data)
+      return organization.choose(data);
     }
-    var valid = false
+    var valid = false;
     for(var i = 0, ii = data.length; i<ii; i++) {
       if(data[i].organization_shortname === Cookies.get('aaron-organization')) {
-        valid = true
-        break
+        valid = true;
+        break;
       }
     }
     if(!valid) {
-      return organization.choose(data)
+      return organization.choose(data);
     }
-  })
-})
+  });
+});
 
-$('.pages').hide()
-hash = window.location.hash.replace('#', '')
+$('.pages').hide();
+hash = window.location.hash.replace('#', '');
 if(hash) {
-  visiblePage = $('.pages#'+window.location.hash.replace('#', ''))
+  visiblePage = $('.pages#'+window.location.hash.replace('#', ''));
   if(visiblePage.length > 0) {
-    visiblePage.show()
+    visiblePage.show();
   } else {
-    $('#start').show()
+    $('#start').show();
   }
-  visiblePage = null // GC
+  visiblePage = null; // GC
 } else {
-  $('#start').show()
+  $('#start').show();
 }
 
 $('#navigation').add('#administration').find('li a[href^="#"]').click(function(event) {
-  var $this = $(this)
+  var $this = $(this);
   if($this.attr('href') === '#') {
-    return
+    return;
   }
-  var page = $('.pages'+$this.attr('href'))
-  var pageId = $('.pages'+$this.attr('href')).attr('id')
+  var page = $('.pages'+$this.attr('href'));
+  var pageId = $('.pages'+$this.attr('href')).attr('id');
   if(page.length > 0) {
-    $('.pages').hide()
-    page.show()
-    event.preventDefault()
-    page.removeAttr('id')
-    window.location.hash = $this.attr('href')
-    page.attr('id', pageId)
+    $('.pages').hide();
+    page.show();
+    event.preventDefault();
+    page.removeAttr('id');
+    window.location.hash = $this.attr('href');
+    page.attr('id', pageId);
   }
-})
+});
 
 /**
  * Disables scrolling of body when a modal is open
  */
-$(document).on('open.fndtn.reveal', '[data-reveal]', function () {
-  var modal = $(this)
-  $('body').css({'max-height': '100%', 'height': '100%', 'overflow': 'hidden'})
-})
+$('body').on('open.fndtn.reveal', '[data-reveal]', function () {
+  $('body').css({'max-height': '100%', 'height': '100%', 'overflow': 'hidden'});
+});
 
 /**
  * Enables scrolling of body when no modals are open
  */
-$(document).on('closed.fndtn.reveal', '[data-reveal]', function () {
-  var modal = $(this)
+$('body').on('closed.fndtn.reveal', '[data-reveal]', function () {
   _.defer(function() {
     if(!$('.reveal-modal').is('.open')) {
-      $('body').css({'max-height': 'none', 'height': 'auto', 'overflow': 'visible'})
+      $('body').css({'max-height': 'none', 'height': 'auto', 'overflow': 'visible'});
     }
-  })
-})
+  });
+});
 
 /**
  * Disables middle mouse scrolling when a modal is open.
  * Source: http://stackoverflow.com/a/30423534/1294363
  */
-document.body.onmousedown = function(e) {
+$('body').on('mousedown', function(e) {
   if (e.button === 1) {
     if($('.reveal-modal').is('.open')) {
-      return false
+      return false;
     }
   }
-}
+});
 
 var organizations = [
   {name: 'Landstinget Blekinge', shortname: 'lb'},
@@ -146,15 +146,15 @@ var organizations = [
   {name: 'Västra Götalandsregionen', shortname: 'vgr'},
   {name: 'Region Örebro län', shortname: 'rol'},
   {name: 'Region Östergötland', shortname: 'lio'}
-]
+];
 
 _.forEach(organizations, function(organization) {
   var option = $('<option></option>', {
     value: organization.shortname,
     text: organization.name
-  })
-  option.appendTo('#signup-organization')
-  option.clone().appendTo('#myAccount-organization')
-  option.clone().appendTo('#choose-organization')
-})
+  });
+  option.appendTo('#signup-organization');
+  option.clone().appendTo('#myAccount-organization');
+  option.clone().appendTo('#choose-organization');
+});
 

@@ -14,6 +14,7 @@
     "browserify-shim": "latest",
     "exorcist": "latest",
     "jade": "latest",
+    "jshint": "^2.8.0",
     "live-reload": "^1.1.0",
     "minimist": "^1.2.0",
     "parallelshell": "latest",
@@ -23,6 +24,7 @@
   },
   "scripts": {
     "test": "echo \"Achtung!\"",
+    "test:jshint": "",
     "prebuild": "npm run clean -s",
     "clean": "rm -r dist/*",
     "build": "npm run build:js && npm run build:css && npm run build:html && npm run build:fonts && npm run build:images",
@@ -100,5 +102,20 @@
     "transform": [
       "browserify-shim"
     ]
+  },
+  "jshintConfig": {
+    "node": true,
+    "bitwise": true,
+    "curly": true,
+    "eqeqeq": true,
+    "latedef": "nofunc",
+    "noarg": true,
+    "nonbsp": true,
+    "nonew": true,
+    "shadow": false,
+    "singleGroups": true,
+    "undef": true,
+    "unused": true,
+    "globalstrict": true
   }
 }

@@ -1,29 +1,29 @@
-/* jshint asi: true, jquery: true, node: true */
+/* jshint jquery: true */
 
-'use strict'
+'use strict';
 
-require('jquery')
+require('jquery');
 
-require('foundation')
-require('foundationReveal')
+require('foundation');
+require('foundationReveal');
 
-var $alertModal = $('#alertModal')
+var $alertModal = $('#alertModal');
 
 function displayModal(title, message, html) {
-  $alertModal.find('#alertModalTitle').text(title)
+  $alertModal.find('#alertModalTitle').text(title);
   if(html) {
-    $alertModal.find('.modal-content').html(title)
+    $alertModal.find('.modal-content').html(title);
   } else {
-    $alertModal.find('.modal-content').text(title)
+    $alertModal.find('.modal-content').text(title);
   }
-  $alertModal.foundation('reveal', 'open')
+  $alertModal.foundation('reveal', 'open');
 }
 
 $alertModal.find('.close').click(function() {
-  $alertModal.foundation('reveal', 'close')
-})
+  $alertModal.foundation('reveal', 'close');
+});
 
 module.exports = {
   modal: $alertModal,
   display: displayModal
-}
+};

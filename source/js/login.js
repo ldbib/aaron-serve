@@ -1,24 +1,24 @@
-/* jshint asi: true, jquery: true, node: true */
+/* jshint jquery: true */
 
-'use strict'
+'use strict';
 
-require('jquery')
+require('jquery');
 
-require('foundation')
-require('foundationReveal')
+require('foundation');
+require('foundationReveal');
 
-var entryError = require('./entryError.js')
-var config = require('../../config.js')
-var organization = require('./organization.js')
-var loading = require('./loading.js')
+var entryError = require('./entryError.js');
+var config = require('../../config.js');
+var organization = require('./organization.js');
+var loading = require('./loading.js');
 
-var $loginModal = $('#loginModal')
+var $loginModal = $('#loginModal');
 
-var currentForm = null
-var loggedIn = false
+var currentForm = null;
+var loggedIn = false;
 
 // StackOverflow RegEx Email validation: http://stackoverflow.com/a/46181/1294363
-var reEmailValidation = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+var reEmailValidation = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
 /**
  * Hides the login forms.
@@ -31,22 +31,22 @@ function hideLoginForms() {
    */
   $loginModal.find('input').each(function() {
     if($(this).is('.error')) {
-      entryError.hide($(this), true)
+      entryError.hide($(this), true);
     }
-  })
+  });
   /**
    * Hides all of the login forms.
    */
-  $loginModal.find('.signup').hide()
-  $loginModal.find('.login').hide()
-  $loginModal.find('.forgot').hide()
-  $loginModal.find('.loading').hide()
-  $loginModal.find('.recovery-sent').hide()
+  $loginModal.find('.signup').hide();
+  $loginModal.find('.login').hide();
+  $loginModal.find('.forgot').hide();
+  $loginModal.find('.loading').hide();
+  $loginModal.find('.recovery-sent').hide();
   /**
    * Hides the return button.
    */
-  $('#login-return').hide()
-  return true
+  $('#login-return').hide();
+  return true;
 }
 
 /**
@@ -55,19 +55,19 @@ function hideLoginForms() {
  * @return {boolean} Returns true.
  */
 function displayLoginModal() {
-  hideLoginForms()
-  $('#loginInformation').show()
-  $loginModal.find('.login').show()
+  hideLoginForms();
+  $('#loginInformation').show();
+  $loginModal.find('.login').show();
   if(!$loginModal.is('.open')) {
-    $(document).one('opened.fndtn.reveal', $loginModal, function () {
-      $('#login-email').focus()
-    })
+    $('body').one('opened.fndtn.reveal', $loginModal, function () {
+      $('#login-email').focus();
+    });
     // TODO add modal manager to manage opening of modals.
-    $loginModal.foundation('reveal', 'open')
+    $loginModal.foundation('reveal', 'open');
   }
-  currentForm = 'login'
-  $('#login-email').focus()
-  return true
+  currentForm = 'login';
+  $('#login-email').focus();
+  return true;
 }
 
 
@@ -78,8 +78,8 @@ function displayLoginModal() {
  * @return {boolean} Returns true.
  */
 function renderBackButton(message) {
-  $('#login-return').show().text(message)
-  return true
+  $('#login-return').show().text(message);
+  return true;
 }
 
 /**
@@ -91,64 +91,64 @@ function isLoggedIn(callback) {
   $.ajax({
     url: config.authServer + '/authenticated',
     method: 'GET',
-    success: function(data, textStatus, jqXHR) {
-      callback(true)
+    success: function(/*data, textStatus, jqXHR*/) {
+      callback(true);
     },
-    error: function(jqXHR, textStatus, errorThrown) {
+    error: function(jqXHR/*, textStatus, errorThrown*/) {
       if(jqXHR.status === 403) {
-        return callback(false)
+        return callback(false);
       }
       setTimeout(function() {
-        isLoggedIn(callback)
-      }, 1000)
+        isLoggedIn(callback);
+      }, 1000);
     }
-  })
+  });
 }
 
 $loginModal.on('opened.fndtn.reveal', function() {
-  $loginModal.removeClass('opening')
-})
+  $loginModal.removeClass('opening');
+});
 $loginModal.on('closed.fndtn.reveal', function() {
-  $loginModal.removeClass('closing')
-})
+  $loginModal.removeClass('closing');
+});
 
 
 $('#login-email, #login-password').keyup(function(event) {
   if(event.keyCode === 13 && currentForm === 'login') {
-    $('#login-button').click()
+    $('#login-button').click();
   }
-})
+});
 
 /** Attempts to sign in the user. */
 $('#login-button').click(function() {
-  $(this).text('Laddar...').attr('disabled', 'disabled')
-  var $email = $('#login-email')
-  var $password = $('#login-password')
-  var err = false
+  $(this).text('Laddar...').attr('disabled', 'disabled');
+  var $email = $('#login-email');
+  var $password = $('#login-password');
+  var err = false;
   /**
    * Checks email before attemting to login. Informs the users of errors.
    */
   if(!reEmailValidation.test($email.val())) {
-    entryError.display($email, 'Ogiltig e-postadress!', true)
-    err = true
+    entryError.display($email, 'Ogiltig e-postadress!', true);
+    err = true;
   } else {
-    entryError.hide($email, true)
+    entryError.hide($email, true);
   }
   /**
    * Checks password before attemting to login. Informs the users of errors.
    */
   if($password.val().length === 0) {
-    entryError.display($password, 'Du måste fylla i ett lösenord!', true)
-    err = true
+    entryError.display($password, 'Du måste fylla i ett lösenord!', true);
+    err = true;
   } else {
-    entryError.hide($password, true)
+    entryError.hide($password, true);
   }
   /**
    * Stop login if error has occured.
    */
   if(err) {
-    $('#login-button').text('Logga in').removeAttr('disabled')
-    return
+    $('#login-button').text('Logga in').removeAttr('disabled');
+    return;
   }
 
   // Simulate a successful login
@@ -159,105 +159,108 @@ $('#login-button').click(function() {
       p: $password.val()
     },
     method: 'POST',
-    success: function(data, textStatus, jqXHR) {
-      $('#login-button').text('Logga in').removeAttr('disabled')
+    success: function(data/*, textStatus, jqXHR*/) {
+      $('#login-button').text('Logga in').removeAttr('disabled');
       if(data.auth) {
-        loggedIn = true
-        $loginModal.addClass('closing').foundation('reveal', 'close')
-        $password.val('')
+        loggedIn = true;
+        $loginModal.addClass('closing').foundation('reveal', 'close');
+        $password.val('');
         organization.getMy(function(err, data) {
           if(err) {
-            return alert('Misslyckades att ladda dina organisationer. Ladda om sidan för att försöka igen! Debugdata: '+err.textStatus)
+            // TODO: replace alerts with something less intrusive.
+            return alert('Misslyckades att ladda dina organisationer. Ladda om sidan för att försöka igen! Debugdata: '+err.textStatus); // jshint ignore:line
           }
-          organization.choose(data)
-        })
+          organization.choose(data);
+        });
       }
     },
-    error: function(jqXHR, textStatus, errorThrown) {
-      $('#login-button').text('Logga in').removeAttr('disabled')
-      var extraInfo
+    error: function(jqXHR/*, textStatus, errorThrown*/) {
+      $('#login-button').text('Logga in').removeAttr('disabled');
+      var extraInfo;
       if(jqXHR.responseJSON) {
-        extraInfo = jqXHR.responseJSON.message
+        extraInfo = jqXHR.responseJSON.message;
       } else {
-        extraInfo = jqXHR.responseText
+        extraInfo = jqXHR.responseText;
       }
       if(jqXHR.status === 400) {
-        entryError.display($password, 'Inloggningsuppgifter felaktiga!', true)
+        entryError.display($password, 'Inloggningsuppgifter felaktiga!', true);
       } else if(jqXHR.status >= 500 && jqXHR.status < 600) {
-        alert('Servern kunde inte ta hand om din inloggning. Försök igen senare. Felmeddelande: '+extraInfo)
+        // TODO: replace alerts with something less intrusive.
+        alert('Servern kunde inte ta hand om din inloggning. Försök igen senare. Felmeddelande: '+extraInfo); // jshint ignore:line
       } else {
-        alert('Ett okänt fel inträffade. Rapportera gärna detta! Felmeddelande: '+extraInfo)
+        // TODO: replace alerts with something less intrusive.
+        alert('Ett okänt fel inträffade. Rapportera gärna detta! Felmeddelande: '+extraInfo); // jshint ignore:line
       }
     }
-  })
-})
+  });
+});
 
 /** Shows the signup form for the user. */
 $('#login-new').click(function() {
-  hideLoginForms()
-  renderBackButton('Avbryt ansökan')
-  $loginModal.find('.signup').show()
-  currentForm = 'signup'
-})
+  hideLoginForms();
+  renderBackButton('Avbryt ansökan');
+  $loginModal.find('.signup').show();
+  currentForm = 'signup';
+});
 
 /** Shows the password recovery form. */
 $('#login-forgot').click(function() {
-  hideLoginForms()
-  renderBackButton('Avbryt återställning')
-  $loginModal.find('.forgot').show()
-  currentForm = 'forgot'
-})
+  hideLoginForms();
+  renderBackButton('Avbryt återställning');
+  $loginModal.find('.forgot').show();
+  currentForm = 'forgot';
+});
 
 /** Submits the password recovery. */
 $('#login-forgot-send').click(function() {
-  var $email = $('#login-email')
+  var $email = $('#login-email');
   // Validate the email address.
   if(!reEmailValidation.test($email.val())) {
-    entryError.display($email, 'Ogiltig e-postadress!', true)
-    return
+    entryError.display($email, 'Ogiltig e-postadress!', true);
+    return;
   }
-  entryError.hide($email, true)
-  $('#loginInformation').hide()
-  hideLoginForms()
-  $loginModal.find('.loading').show()
+  entryError.hide($email, true);
+  $('#loginInformation').hide();
+  hideLoginForms();
+  $loginModal.find('.loading').show();
   // Simulate a successful recovery.
   setTimeout(function() {
-    hideLoginForms()
-    $loginModal.find('.recovery-sent').show()
-    renderBackButton('Tillbaka till inloggningen')
-  }, 1000)
-})
+    hideLoginForms();
+    $loginModal.find('.recovery-sent').show();
+    renderBackButton('Tillbaka till inloggningen');
+  }, 1000);
+});
 
 /**
  * Submits a new registration.
  */
 $('#signup-button').click(function() {
-  var $organization = $('#signup-organization')
-  var $firstName = $('#signup-firstname')
-  var $lastName = $('#signup-lastname')
-  var $workplace = $('#signup-workplace')
-  var $email = $('#signup-email')
-  var $privateEmail = $('#signup-private-email')
-  var $password = $('#signup-password')
-  var $validatePassword = $('#signup-validate-password')
-  var err = false
+  /*var $organization = $('#signup-organization');
+  var $firstName = $('#signup-firstname');
+  var $lastName = $('#signup-lastname');
+  var $workplace = $('#signup-workplace');*/
+  var $email = $('#signup-email');
+  //var $privateEmail = $('#signup-private-email');
+  var $password = $('#signup-password');
+  //var $validatePassword = $('#signup-validate-password');
+  var err = false;
   /**
    * Checks email before attemting to signup. Informs the users of errors.
    */
   if(!reEmailValidation.test($email.val())) {
-    entryError.display($email, 'Ogiltig e-postadress!', true)
-    err = true
+    entryError.display($email, 'Ogiltig e-postadress!', true);
+    err = true;
   } else {
-    entryError.hide($email, true)
+    entryError.hide($email, true);
   }
   /**
    * Checks password before attemting to signup. Informs the users of errors.
    */
   if($password.val().length === 0) {
-    entryError.display($password, 'Du måste fylla i ett lösenord!', true)
-    err = true
+    entryError.display($password, 'Du måste fylla i ett lösenord!', true);
+    err = true;
   } else {
-    entryError.hide($password, true)
+    entryError.hide($password, true);
   }
 
   // TODO: more validation
@@ -266,46 +269,48 @@ $('#signup-button').click(function() {
    * Stop signup if error has occured.
    */
   if(err) {
-    return
+    return;
   }
 
   // Simulate a successful signup
   setTimeout(function() {
     // TODO
-  }, 1000)
-})
+  }, 1000);
+});
 
 /** Returns to the login form. */
 $('#login-return').click(function() {
-  displayLoginModal()
-})
+  displayLoginModal();
+});
 
 
 $('#logout').click(function() {
-  loading.display()
+  loading.display();
   $.ajax({
     url: config.authServer + '/deauthenticate',
     method: 'POST',
-    success: function(data, textStatus, jqXHR) {
-      loading.hide()
-      displayLoginModal()
+    success: function(/*data, textStatus, jqXHR*/) {
+      loading.hide();
+      displayLoginModal();
     },
-    error: function(jqXHR, textStatus, errorThrown) {
-      var extraInfo
-      loading.hide()
+    error: function(jqXHR/*, textStatus, errorThrown*/) {
+      var extraInfo;
+      loading.hide();
       if(jqXHR.responseJSON) {
-        extraInfo = jqXHR.responseJSON.message
+        extraInfo = jqXHR.responseJSON.message;
       } else {
-        extraInfo = jqXHR.responseText
+        extraInfo = jqXHR.responseText;
       }
       if(jqXHR.status >= 500 && jqXHR.status < 600) {
-        alert('Servern kunde inte ta hand om din inloggning. Försök igen senare. Felmeddelande: '+extraInfo)
+        // TODO: replace alerts with something less intrusive.
+        alert('Servern kunde inte ta hand om din inloggning. Försök igen senare. Felmeddelande: '+extraInfo); // jshint ignore:line
       } else {
-        alert('Ett okänt fel inträffade. Rapportera gärna detta! Felmeddelande: '+extraInfo)
+        // TODO: replace alerts with something less intrusive.
+        alert('Ett okänt fel inträffade. Rapportera gärna detta! Felmeddelande: '+extraInfo); // jshint ignore:line
       }
     }
-  })
-})
+  });
+});
 
 
 module.exports = {
@@ -313,4 +318,4 @@ module.exports = {
   hideLoginForms: hideLoginForms,
   displayModal: displayLoginModal,
   isLoggedIn: isLoggedIn
-}
+};

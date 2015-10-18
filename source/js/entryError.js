@@ -1,8 +1,8 @@
-/* jshint asi: true, jquery: true, node: true */
+/* jshint jquery: true */
 
-'use strict'
+'use strict';
 
-require('jquery')
+require('jquery');
 
 /**
  * Displays an error under an input text element or replaces the error text in
@@ -18,39 +18,39 @@ require('jquery')
  */
 function displayError(jqObj, errorMessage, jqLabels) {
   if(typeof jqObj !== 'object' || jqObj.length === 0 || typeof errorMessage !== 'string') {
-    return false
+    return false;
   }
-  var jqObjNext = jqObj.next()
+  var jqObjNext = jqObj.next();
   // If the error message already exists, replace the text.
   if(jqObjNext.is('small.error')) {
-    jqObjNext.text(errorMessage)
+    jqObjNext.text(errorMessage);
     if(jqObjNext.is('.hiding')) {
       jqObjNext.stop().removeClass('hiding').addClass('showing').slideDown(function() {
-        jqObjNext.removeClass('showing')
-      })
+        jqObjNext.removeClass('showing');
+      });
     }
-    return true
+    return true;
   }
   jqObj.addClass('error').after($( '<small/>', {
     'class': 'error',
     text: errorMessage,
     click: function() {
-      hideError(jqObj)
+      hideError(jqObj);
     }
-  }))
+  }));
   // Use the jQuery slideDown() effect on the error elemement.
-  jqObjNext = jqObj.next()
+  jqObjNext = jqObj.next();
   jqObjNext.hide().addClass('showing').slideDown(function() {
-    jqObjNext.removeClass('showing')
-  })
+    jqObjNext.removeClass('showing');
+  });
   if(typeof jqLabels === 'boolean') {
     if(jqLabels) {
-      $('label[for='+jqObj.attr('id')+']').addClass('error')
+      $('label[for='+jqObj.attr('id')+']').addClass('error');
     }
   } else if(typeof jqLabels === 'object' && jqLabels.length > 0) {
-    jqLabels.addClass('error')
+    jqLabels.addClass('error');
   }
-  return true
+  return true;
 }
 
 /**
@@ -65,25 +65,25 @@ function displayError(jqObj, errorMessage, jqLabels) {
  */
 function hideError(jqObj, jqLabels) {
   if(typeof jqObj !== 'object' || jqObj.length === 0) {
-    return false
+    return false;
   }
   if(jqObj.next().is('small.error')) {
     jqObj.next('small.error').slideUp(function() {
-      jqObj.next('small.error').remove()
-      jqObj.removeClass('error')
-    }).addClass('hiding')
+      jqObj.next('small.error').remove();
+      jqObj.removeClass('error');
+    }).addClass('hiding');
   }
   if(typeof jqLabels === 'boolean') {
     if(jqLabels) {
-      $('label[for='+jqObj.attr('id')+']').removeClass('error')
+      $('label[for='+jqObj.attr('id')+']').removeClass('error');
     }
   } else if(typeof jqLabels === 'object' && jqLabels.length > 0) {
-    jqLabels.removeClass('error')
+    jqLabels.removeClass('error');
   }
-  return true
+  return true;
 }
 
 module.exports = {
   display: displayError,
   hide: hideError
-}
+};

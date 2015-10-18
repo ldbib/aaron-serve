@@ -1,6 +1,6 @@
-/* jshint asi: true, node: true */
+/* jshint node: true */
 
-'use strict'
+'use strict';
 
 var browserify = require('browserify'),
   watchify     = require('watchify'),
@@ -8,7 +8,7 @@ var browserify = require('browserify'),
   fs           = require('fs'),
   exorcist     = require('exorcist'),
   mapfile      = path.join(__dirname, 'dist/script.js.map'),
-  argv         = require('minimist')(process.argv.slice(2))
+  argv         = require('minimist')(process.argv.slice(2));
 
 var b = browserify({
   debug: true,
@@ -25,25 +25,25 @@ var b = browserify({
   packageCache: {}
 })
   .require('lodash', {expose: 'underscore'})
-  .require(require.resolve('./source/js/main'), { entry: true })
+  .require(require.resolve('./source/js/main'), { entry: true });
 if(argv.w || argv.watch) {
   // WATCH!!
   var w = watchify(b)
   .on('update', function(ids) {
-    bundleIt()
+    bundleIt();
   })
   .on('log', function(msg) {
-    console.log('[WATCHIFY]', msg)
-  })
+    console.log('[WATCHIFY]', msg);
+  });
 } else {
   // DON'T WATCH!!
-  var w = b
+  var w = b;
 }
 
 function bundleIt() {
   w.bundle()
   .pipe(exorcist(mapfile))
-  .pipe(fs.createWriteStream(path.join(__dirname, 'dist/script.js'), 'utf8'))
+  .pipe(fs.createWriteStream(path.join(__dirname, 'dist/script.js'), 'utf8'));
 }
 
-bundleIt()
+bundleIt();

@@ -1,42 +1,42 @@
-/* jshint asi: true, jquery: true, node: true */
+/* jshint jquery: true */
 
-'use strict'
+'use strict';
 
-require('jquery')
+require('jquery');
 
-require('foundation')
-require('foundationReveal')
+require('foundation');
+require('foundationReveal');
 
-var $loadingModal = $('#loadingModal')
+var $loadingModal = $('#loadingModal');
 
 $loadingModal.on('opened.fndtn.reveal', function() {
-  $loadingModal.removeClass('opening')
-})
+  $loadingModal.removeClass('opening');
+});
 $loadingModal.on('closed.fndtn.reveal', function() {
-  $loadingModal.removeClass('closing')
-})
+  $loadingModal.removeClass('closing');
+});
 
 function displayModal() {
   // TODO add modal manager to manage opening of modals.
   if($loadingModal.is('.closing')) {
     return setTimeout(function() {
-      $loadingModal.addClass('opening').foundation('reveal', 'open')
-    }, 300)
+      $loadingModal.addClass('opening').foundation('reveal', 'open');
+    }, 300);
   }
-  $loadingModal.addClass('opening').foundation('reveal', 'open')
+  $loadingModal.addClass('opening').foundation('reveal', 'open');
 }
 
 function hideModal() {
   if($loadingModal.is('.opening')) {
     return setTimeout(function() {
-      $loadingModal.addClass('closing').foundation('reveal', 'close')
-    }, 300)
+      $loadingModal.addClass('closing').foundation('reveal', 'close');
+    }, 300);
   }
-  $loadingModal.addClass('closing').foundation('reveal', 'close')
+  $loadingModal.addClass('closing').foundation('reveal', 'close');
 }
 
 module.exports = {
   modal: $loadingModal,
   display: displayModal,
   hide: hideModal
-}
+};

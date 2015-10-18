@@ -1,24 +1,24 @@
-/* jshint asi: true, jquery: true, node: true */
+/* jshint jquery: true */
 
-'use strict'
+'use strict';
 
-require('jquery')
+require('jquery');
 
-var Cookies = require('js-cookie')
+var Cookies = require('js-cookie');
 
-var config = require('../../config.js')
+var config = require('../../config.js');
 
-var $organizationModal = $('#organizationModal')
-var $organizationChooserSelect = $organizationModal.find('#choose-organization')
+var $organizationModal = $('#organizationModal');
+var $organizationChooserSelect = $organizationModal.find('#choose-organization');
 
 
 function chooseOrganization(organizations) {
-  var i, ii, html = ''
+  var i, ii, html = '';
   for(i=0, ii=organizations.length; i<ii; i++) {
-    html+= '<option value="'+organizations[i].organization_shortname+'">'+organizations[i].organization_name+'</option>'
+    html+= '<option value="'+organizations[i].organization_shortname+'">'+organizations[i].organization_name+'</option>';
   }
-  $organizationChooserSelect.html(html)
-  displayOrganizationModal()
+  $organizationChooserSelect.html(html);
+  displayOrganizationModal();
 }
 
 /**
@@ -33,38 +33,38 @@ function displayOrganizationModal() {
   // TODO add modal manager to manage opening of modals.
 
   if(!$organizationModal.is('.open')) {
-    $organizationModal.addClass('opening').foundation('reveal', 'open')
+    $organizationModal.addClass('opening').foundation('reveal', 'open');
   }
-  return true
+  return true;
 }
 
 function getMyOrganizations(callback) {
   $.ajax({
     url: config.authServer + '/organization/for/me',
     method: 'GET',
-    success: function(data, textStatus, jqXHR) {
-      callback(null, data)
+    success: function(data/*, textStatus, jqXHR*/) {
+      callback(null, data);
     },
     error: function(jqXHR, textStatus, errorThrown) {
-      callback({jqXHR: jqXHR, textStatus: textStatus, errorThrown: errorThrown}, null)
+      callback({jqXHR: jqXHR, textStatus: textStatus, errorThrown: errorThrown}, null);
     }
-  })
+  });
 }
 
 $organizationModal.on('opened.fndtn.reveal', function() {
-  $organizationModal.removeClass('opening')
-})
+  $organizationModal.removeClass('opening');
+});
 $organizationModal.on('closed.fndtn.reveal', function() {
-  $organizationModal.removeClass('closing')
-})
+  $organizationModal.removeClass('closing');
+});
 
 
 $('#choose-organization-button').click(function() {
-  exports.currentOrganization = $organizationChooserSelect.val()
-  Cookies.set('aaron-organization', exports.currentOrganization, { expires: 365 })
-  $organizationModal.addClass('closing').foundation('reveal', 'close')
-})
+  exports.currentOrganization = $organizationChooserSelect.val();
+  Cookies.set('aaron-organization', exports.currentOrganization, { expires: 365 });
+  $organizationModal.addClass('closing').foundation('reveal', 'close');
+});
 
-exports.choose = chooseOrganization
-exports.getMy = getMyOrganizations
-exports.currentOrganization = null
+exports.choose = chooseOrganization;
+exports.getMy = getMyOrganizations;
+exports.currentOrganization = null;
