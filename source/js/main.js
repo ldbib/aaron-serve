@@ -96,14 +96,15 @@ $('#navigation').add('#administration').find('li a[href^="#"]').click(function(e
 });
 
 organization.getAll(function(err, data) {
+  console.log(data);
   if(err) {
     // TODO: non obtrusive alert
     return alert('Något gick fel vid hämtningen av data ifrån servern. Prova att ladda om sidan! Debug', err.textStatus);
   }
-  _.forEach(organizations, function(organization) {
+  _.forEach(data, function(organization) {
     var option = $('<option></option>', {
-      value: organization.shortname,
-      text: organization.name
+      value: organization.organization_shortname,
+      text: organization.organization_name
     });
     option.appendTo('#signup-organization');
     option.clone().appendTo('#myAccount-organization');
