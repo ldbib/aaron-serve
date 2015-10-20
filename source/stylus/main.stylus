@@ -18,6 +18,13 @@ option
 
 .small-margin-top
   margin-top: 10px
+  
+.full-width
+  width: 100%
+  
+#userTable
+  th
+    text-align: center
 
 /*
 #alertModal .close, #loginModal .close

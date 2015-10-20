@@ -18,6 +18,11 @@ var $organizationChooserSelect = $organizationModal.find('#choose-organization')
 
 function chooseOrganization(organizations) {
   var i, ii, html = '';
+  if(organizations.length === 1) {
+    exports.currentOrganization = organizations[0].organization_shortname;
+    Cookies.set('aaron-organization', exports.currentOrganization, { expires: 365 });
+    return;
+  }
   for(i=0, ii=organizations.length; i<ii; i++) {
     html+= '<option value="'+organizations[i].organization_shortname+'">'+organizations[i].organization_name+'</option>';
   }

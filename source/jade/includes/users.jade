@@ -1,1 +1,17 @@
-p users
+p.no-permission Du har inga behörigheter för att komma åt användarhantering. Vill du redigera ditt eget konto? Tryck på "Mitt konto" ovan istället.
+div.permission
+  dl.sub-nav
+    dt Filter:
+    dd.active
+      a(href="#users/filter/all") Alla
+    dd
+      a(href="#users/filter/verified") Verifierade
+    dd
+      a(href="#users/filter/nonverified") Ej verifierade
+
+  table.full-width#userTable
+    caption Användare som du kan hantera (klicka för att redigera användare)
+    tr
+      th Namn (efternamn, förnamn)
+      th E-postadresser
+    tr.empty

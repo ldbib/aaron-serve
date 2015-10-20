@@ -65,18 +65,29 @@ login.isLoggedIn(function(status) {
 });
 
 $('.pages').hide();
-hash = window.location.hash.replace('#', '');
-if(hash) {
-  visiblePage = $('.pages#'+window.location.hash.replace('#', ''));
-  if(visiblePage.length > 0) {
-    visiblePage.show();
+
+function processHash() {
+  var hash;
+  var parts;
+  if(window.location.hash.length > 1) {
+    hash = window.location.hash.substr(1);
+    parts = hash.split('/');
+    visiblePage = $('.pages#'+parts[0]);
+    if(visiblePage.length > 0) {
+      visiblePage.show();
+      if(parts > 1) {
+        visiblePage.find('a[href="#'+hash+'"]').click();
+      }
+    } else {
+      $('#start').show();
+    }
+    visiblePage = null; // GC
   } else {
     $('#start').show();
   }
-  visiblePage = null; // GC
-} else {
-  $('#start').show();
 }
+
+processHash();
 
 $('#navigation').add('#administration').find('li a[href^="#"]').click(function(event) {
   var $this = $(this);
@@ -96,7 +107,6 @@ $('#navigation').add('#administration').find('li a[href^="#"]').click(function(e
 });
 
 organization.getAll(function(err, data) {
-  console.log(data);
   if(err) {
     // TODO: non obtrusive alert
     return alert('Något gick fel vid hämtningen av data ifrån servern. Prova att ladda om sidan! Debug', err.textStatus);
