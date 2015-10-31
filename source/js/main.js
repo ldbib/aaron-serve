@@ -22,6 +22,7 @@ var _ = require('lodash');
 
 var login        = require('./login.js');
 var organization = require('./organization.js');
+var loading      = require('./loading.js');
 
 var organizations = [];
 
@@ -35,11 +36,15 @@ $('body').foundation({
   reveal: {
     close_on_background_click: false,
     close_on_esc: false,
-    multiple_opened: true
+    multiple_opened: true,
+    animation_speed: 100
   }
 });
 
+loading.open();
+
 login.isLoggedIn(function(status) {
+  loading.close();
   if(!status) {
     return login.displayModal();
   }
@@ -65,6 +70,7 @@ login.isLoggedIn(function(status) {
 });
 
 $('.pages').hide();
+
 
 function processHash() {
   var hash;
