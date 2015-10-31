@@ -89,7 +89,7 @@ function renderBackButton(message) {
  */
 function isLoggedIn(callback) {
   $.ajax({
-    url: config.authServer + '/authenticated',
+    url: config.apiServer + '/authenticated',
     method: 'GET',
     success: function(/*data, textStatus, jqXHR*/) {
       callback(true);
@@ -145,7 +145,7 @@ $('#login-button').click(function() {
 
   // Simulate a successful login
   $.ajax({
-    url: config.authServer + '/authenticate',
+    url: config.apiServer + '/authenticate',
     data: {
       u: $email.val(),
       p: $password.val()
@@ -279,7 +279,7 @@ $('#login-return').click(function() {
 $('#logout').click(function() {
   loading.open();
   $.ajax({
-    url: config.authServer + '/deauthenticate',
+    url: config.apiServer + '/deauthenticate',
     method: 'POST',
     success: function(/*data, textStatus, jqXHR*/) {
       loading.close();

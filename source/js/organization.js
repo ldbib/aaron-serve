@@ -46,7 +46,7 @@ function displayOrganizationModal() {
 
 function getMyOrganizations(callback) {
   $.ajax({
-    url: config.authServer + '/organization/for/me',
+    url: config.apiServer + '/organization/for/me',
     method: 'GET',
     success: function(data/*, textStatus, jqXHR*/) {
       callback(null, data);
@@ -58,7 +58,7 @@ function getMyOrganizations(callback) {
 }
 function getAllOrganizations(callback, retries) {
   $.ajax({
-    url: config.authServer + '/organization',
+    url: config.apiServer + '/organization',
     method: 'GET',
     success: function(data/*, textStatus, jqXHR*/) {
       callback(null, data);
