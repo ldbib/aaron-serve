@@ -28,6 +28,7 @@
   },
   "resolutions": {
     "jquery-placeholder": "~2.1.2",
-    "jquery": "~1.11.3"
+    "jquery": "~1.11.3",
+    "modernizr": "~2.8.3"
   }
 }
