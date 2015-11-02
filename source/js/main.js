@@ -24,6 +24,8 @@ var login        = require('./login.js');
 var organization = require('./organization.js');
 var loading      = require('./loading.js');
 
+require('./myAccount.js');
+
 var organizations = [];
 
 var hash,
@@ -60,6 +62,7 @@ login.isLoggedIn(function(status) {
     for(var i = 0, ii = data.length; i<ii; i++) {
       if(data[i].organization_shortname === Cookies.get('aaron-organization')) {
         valid = true;
+        organization.current = data[i].organization_shortname;
         break;
       }
     }

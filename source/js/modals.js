@@ -108,5 +108,4 @@ exports.open  = openModal;
 exports.close = closeModal;
 exports.add   = addModal;
 exports.del   = delModal;
-exports.currentOrganization = null;
 

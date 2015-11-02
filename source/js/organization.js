@@ -19,8 +19,8 @@ var $organizationChooserSelect = $organizationModal.find('#choose-organization')
 function chooseOrganization(organizations) {
   var i, ii, html = '';
   if(organizations.length === 1) {
-    exports.currentOrganization = organizations[0].organization_shortname;
-    Cookies.set('aaron-organization', exports.currentOrganization, { expires: 365 });
+    exports.current = organizations[0].organization_shortname;
+    Cookies.set('aaron-organization', exports.current, { expires: 365 });
     return;
   }
   for(i=0, ii=organizations.length; i<ii; i++) {
@@ -80,12 +80,12 @@ function getAllOrganizations(callback, retries) {
 }
 
 $('#choose-organization-button').click(function() {
-  exports.currentOrganization = $organizationChooserSelect.val();
-  Cookies.set('aaron-organization', exports.currentOrganization, { expires: 365 });
+  exports.current = $organizationChooserSelect.val();
+  Cookies.set('aaron-organization', exports.current, { expires: 365 });
   modals.close($organizationModal);
 });
 
 exports.choose = chooseOrganization;
 exports.getMy  = getMyOrganizations;
 exports.getAll = getAllOrganizations;
-exports.currentOrganization = null;
+exports.current = null;
