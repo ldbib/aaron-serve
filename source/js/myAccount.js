@@ -20,8 +20,6 @@ var myData = {
   lastName:  ''
 };
 
-console.log(myData.organization());
-
 $('#navigation').find('a[href="#myAccount"]').click(function() {
   if(myAccountLoaded) {
     myAccountLoaded = true;
