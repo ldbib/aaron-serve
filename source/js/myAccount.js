@@ -39,7 +39,6 @@ $('#navigation').find('a[href="#myAccount"]').click(function() {
 });
 
 $('#myAccount-abort').click(function() {
-  console.log(myData.organization());
   $('#myAccount-old-password').val('');
   entryError.hide($('#myAccount-old-password'), true);
   $('#myAccount-email').val('');
